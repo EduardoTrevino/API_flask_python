@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPT Response Generator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        text-align: center;
+    }
+    .input-box {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+    .submit-btn {
+        padding: 10px 20px;
+        font-size: 18px;
+    }
+    .response-box {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        text-align: left;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <input type="text" class="input-box" id="inputBox" placeholder="Enter your message here..."/>
+    <button class="submit-btn" onclick="getGPTResponse()">Send</button>
+    
+    <div class="response-box" id="responseBox"></div>
+</div>
+
+<script>
+async function getGPTResponse() {
+    const inputBox = document.getElementById('inputBox');
+    const responseBox = document.getElementById('responseBox');
+    
+    const userMessage = inputBox.value;
+
+    try {
+        const response = await fetch('/get-response', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ content: userMessage }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+
+        const data = await response.json();
+        const assistantMessage = data.content.trim();
+        
+        // Display the user message and assistant response
+        responseBox.innerHTML = `<div><b>User:</b> ${userMessage}</div><div><b>Assistant:</b> ${assistantMessage}</div>`;
+        
+        // Clear the input box
+        inputBox.value = '';
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        const errorData = await error.response.json();
+        responseBox.innerHTML += `<div style="color: red;">Error: ${errorData.error}</div>`;
+    }
+}
+</script>
+</body>
+</html>
