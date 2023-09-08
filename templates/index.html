@@ -36,7 +36,7 @@
 
 <div class="container">
     <input type="text" class="input-box" id="inputBox" placeholder="Enter your message here..."/>
-    <button class="submit-btn" onclick="getGPTResponse()">Send</button>
+    <button class="submit-btn" onclick="getGPTResponse()">Submit</button>
     
     <div class="response-box" id="responseBox"></div>
 </div>
@@ -65,7 +65,7 @@ async function getGPTResponse() {
         const assistantMessage = data.content.trim();
         
         // Display the user message and assistant response
-        responseBox.innerHTML = `<div><b>User:</b> ${userMessage}</div><div><b>Assistant:</b> ${assistantMessage}</div>`;
+        responseBox.innerHTML = `<div><b>Your Response:</b> ${userMessage}</div><div><b>Intelligent Feedback:</b> ${assistantMessage}</div>`;
         
         // Clear the input box
         inputBox.value = '';

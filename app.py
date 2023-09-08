@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request, jsonify
 import openai
+import os
 
 app = Flask(__name__)
-
+### TO work around the issue of having to give context of the question that the user is responding we may need to have
+### Three diffrent webpages, each with the same general prompt, but with the context of the different questions, and load the embedded link accordingly.
+### This approach would require us to save the context of the question, user response, and the generated response in a database, or a datastructure.
 # Set your OpenAI API key here
-openai.api_key = "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"
+openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 @app.route('/')
 def home():
