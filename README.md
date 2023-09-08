@@ -4,9 +4,7 @@ A E-principles solution inside of OLI through embedded links for interactive con
 
 Software:
 
-Python
-
-HTML
+*Python\n*HTML
 
 OpenAI
 
