@@ -4,12 +4,10 @@ A E-principles solution inside of OLI through embedded links for interactive con
 
 Software:
 
-*Python\n*HTML
-
-OpenAI
-
-Flask
-
-Heroku
+- Python
+- HTML
+- OpenAI
+- Flask
+- Heroku
 
 DB?*(this it TBD)
