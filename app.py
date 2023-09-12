@@ -3,6 +3,7 @@ import openai
 import os
 
 app = Flask(__name__)
+### This isssue was tested and will not be a probelem, the next thing to test is if the context of the question, pasted as a prompt if it can understan
 ### TO work around the issue of having to give context of the question that the user is responding we may need to have
 ### Three diffrent webpages, each with the same general prompt, but with the context of the different questions, and load the embedded link accordingly.
 ### This approach would require us to save the context of the question, user response, and the generated response in a database, or a datastructure.
@@ -16,11 +17,13 @@ def home():
 @app.route('/get-response', methods=['POST'])
 def get_response():
     user_message = request.json.get('content')
+    question_message = request.json.get('question')
     # try:
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": question_message},  # Include the question message in the API request
             {"role": "user", "content": user_message}
           ]
         )

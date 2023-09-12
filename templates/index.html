@@ -35,18 +35,30 @@
 <body>
 
 <div class="container">
+    <div id="questionBox"></div> <!-- Placeholder for the question -->
     <input type="text" class="input-box" id="inputBox" placeholder="Enter your message here..."/>
     <button class="submit-btn" onclick="getGPTResponse()">Submit</button>
     
     <div class="response-box" id="responseBox"></div>
 </div>
 
+
 <script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const questionText = urlParams.get('question');
+    if(questionText) {
+        document.getElementById('questionBox').innerText = decodeURIComponent(questionText);
+    }
+});
+
 async function getGPTResponse() {
     const inputBox = document.getElementById('inputBox');
+    const questionBox = document.getElementById('questionBox'); // Get the question box element
     const responseBox = document.getElementById('responseBox');
-    
+
     const userMessage = inputBox.value;
+    const questionText = questionBox.innerText; // Get the question text
 
     try {
         const response = await fetch('/get-response', {
@@ -54,7 +66,10 @@ async function getGPTResponse() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ content: userMessage }),
+            body: JSON.stringify({ 
+                content: userMessage, 
+                question: questionText
+            }),
         });
 
         if (!response.ok) {
