@@ -35,20 +35,23 @@
         cursor: pointer; /* changes the cursor to a hand when hovering over the button */
     }
     .response-box {
-        margin-top: 20px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        background-color: #f9f9f9;
-        text-align: left;
-    }
-    #questionBox {
-        color: white;
-        font-weight: bold;
-        background-color: #333;
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-    }
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #2D3748; /* Changed background color to gray */
+    color: white; /* Set text color to white */
+    text-align: left;
+    border-radius: 5px; /* optional: for rounded corners */
+}
+
+#questionBox {
+    color: white; /* existing white color for the text */
+    font-weight: bold; /* existing bold font weight */
+    background-color: #2D3748; /* Changed background color to gray */
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px; /* existing border radius for rounded corners */
+}
 </style>
 </head>
 <body>
@@ -56,7 +59,7 @@
 <div class="container">
     <div id="questionBox"></div> <!-- Placeholder for the question -->
     <div class="input-area">
-        <input type="text" class="input-box" id="inputBox" placeholder="Enter your message here..."/>
+        <input type="text" class="input-box" id="inputBox" placeholder="Think critically, especially when you expand on why..."/>
         <button class="submit-btn" onclick="getGPTResponse()">Submit</button>
     </div>
     
