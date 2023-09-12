@@ -16,12 +16,23 @@
     .input-box {
         width: 100%;
         padding: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 10px; /* reduced margin */
         font-size: 18px;
+        box-sizing: border-box; /* ensures padding doesn't increase width */
+    }
+    .input-area {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
     }
     .submit-btn {
         padding: 10px 20px;
         font-size: 18px;
+        background-color: blue; /* setting background to blue */
+        color: white; /* setting text color to white */
+        border: none; /* removing default border */
+        border-radius: 5px; /* optional: for rounded corners */
+        cursor: pointer; /* changes the cursor to a hand when hovering over the button */
     }
     .response-box {
         margin-top: 20px;
@@ -30,14 +41,24 @@
         background-color: #f9f9f9;
         text-align: left;
     }
+    #questionBox {
+        color: white;
+        font-weight: bold;
+        background-color: #333;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
 </style>
 </head>
 <body>
 
 <div class="container">
     <div id="questionBox"></div> <!-- Placeholder for the question -->
-    <input type="text" class="input-box" id="inputBox" placeholder="Enter your message here..."/>
-    <button class="submit-btn" onclick="getGPTResponse()">Submit</button>
+    <div class="input-area">
+        <input type="text" class="input-box" id="inputBox" placeholder="Enter your message here..."/>
+        <button class="submit-btn" onclick="getGPTResponse()">Submit</button>
+    </div>
     
     <div class="response-box" id="responseBox"></div>
 </div>
