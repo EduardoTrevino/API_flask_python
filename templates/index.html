@@ -104,7 +104,7 @@ async function getGPTResponse() {
         const assistantMessage = data.content.trim();
         
         // Display the user message and assistant response
-        responseBox.innerHTML = `<div><b>Your Response:</b> ${userMessage}</div><div><b>Intelligent Feedback:</b> ${assistantMessage}</div>`;
+        responseBox.innerHTML = `<div><b>Your Response:</b> ${userMessage}</div><br><div><b>Intelligent Feedback:</b> ${assistantMessage}</div>`;
         
         // Clear the input box
         inputBox.value = '';
