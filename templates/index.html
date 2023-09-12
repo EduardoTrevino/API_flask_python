@@ -101,10 +101,23 @@ async function getGPTResponse() {
         }
 
         const data = await response.json();
-        const assistantMessage = data.content.trim();
+        let assistantMessage = data.content.trim();
+
+        // Extract the color cue and set the color variable
+        let color = "black"; // Default color
+        if (assistantMessage.startsWith("Green:")) {
+            color = "green";
+            assistantMessage = assistantMessage.substring(6).trim();
+        } else if (assistantMessage.startsWith("Yellow:")) {
+            color = "yellow";
+            assistantMessage = assistantMessage.substring(7).trim();
+        } else if (assistantMessage.startsWith("Red:")) {
+            color = "red";
+            assistantMessage = assistantMessage.substring(4).trim();
+        }
         
         // Display the user message and assistant response
-        responseBox.innerHTML = `<div><b>Your Response:</b> ${userMessage}</div><br><div><b>Intelligent Feedback:</b> ${assistantMessage}</div>`;
+        responseBox.innerHTML = `<div><b>Your Response:</b> ${userMessage}</div><br><div style="color: ${color};"><b>Intelligent Feedback:</b> ${assistantMessage}</div>`;
         
         // Clear the input box
         inputBox.value = '';
