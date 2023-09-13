@@ -12,7 +12,7 @@ url = urlparse(os.environ.get('DATABASE_URL'))
 url = url._replace(scheme=url.scheme.replace('postgres', 'postgresql'))
 DATABASE_URL = urlunparse(url)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
