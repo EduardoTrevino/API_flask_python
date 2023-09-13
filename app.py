@@ -62,7 +62,6 @@ def get_response():
             user = User(user_id=str(last_user_id), usage_count=1)
             db.session.add(user)
             user_id = str(last_user_id)
-            db.session.add(user)
             db.session.commit()
         else:
             # Increment the usage count for the current user ID
@@ -89,7 +88,7 @@ def get_response():
         # db.session.commit()
 
         # return jsonify(content=assistant_message)
-        def generate():
+        def generate(user_message, question_message, user_id):
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -110,7 +109,10 @@ def get_response():
             db.session.add(interaction)
             db.session.commit()
 
-        return Response(stream_with_context(generate()), content_type='text/event-stream')
+            yield "END"  # Signal the end of the stream
+
+        
+        return Response(stream_with_context(generate(user_message, question_message, user_id)), content_type='text/event-stream')
     
     except Exception as e:
         # Log the full error message and stack trace

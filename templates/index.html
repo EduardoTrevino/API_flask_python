@@ -139,7 +139,10 @@ async function getGPTResponse() {
                 break;
             }
             assistantMessage += new TextDecoder().decode(value);
-
+            if (assistantMessage.endsWith("END")) {
+                assistantMessage = assistantMessage.substring(0, assistantMessage.length - 3);  // Remove the "END" from the message
+                break;  // Break out of the loop as we have reached the end of the stream
+            }
             if (!colorExtracted) {
                 if (assistantMessage.startsWith("Green:")) {
                     color = "green";
