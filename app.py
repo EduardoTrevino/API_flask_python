@@ -101,8 +101,8 @@ def get_response():
             
             assistant_message = ""
             for chunk in response:
-                assistant_message += chunk.choices[0].message['content']
-                yield chunk.choices[0].message['content']
+                assistant_message += chunk['choices'][0]['text'].strip()
+                yield chunk['choices'][0]['text'].strip()
             
             # Save the interaction data in the database
             interaction = Interaction(user_id=user_id, question=question_message, learner_response=user_message, llm_response=assistant_message, timestamp=datetime.utcnow())
