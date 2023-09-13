@@ -110,25 +110,54 @@ async function getGPTResponse() {
             throw new Error('Network response was not ok ' + response.statusText);
         }
 
-        const data = await response.json();
-        let assistantMessage = data.content.trim();
+        // const data = await response.json();
+        // let assistantMessage = data.content.trim();
 
-        // Extract the color cue and set the color variable
+        // // Extract the color cue and set the color variable
+        // let color = "black"; // Default color
+        // if (assistantMessage.startsWith("Green:")) {
+        //     color = "green";
+        //     assistantMessage = assistantMessage.substring(6).trim();
+        // } else if (assistantMessage.startsWith("Yellow:")) {
+        //     color = "yellow";
+        //     assistantMessage = assistantMessage.substring(7).trim();
+        // } else if (assistantMessage.startsWith("Red:")) {
+        //     color = "red";
+        //     assistantMessage = assistantMessage.substring(4).trim();
+        // }
+        
+        // // Display the user message and assistant response
+        // responseBox.innerHTML = `<div><b>Your Response:</b> ${userMessage}</div><br><div style="color: ${color};"><b>Intelligent Feedback:</b> ${assistantMessage}</div>`;
+        const reader = response.body.getReader();
+        let assistantMessage = "";
         let color = "black"; // Default color
-        if (assistantMessage.startsWith("Green:")) {
-            color = "green";
-            assistantMessage = assistantMessage.substring(6).trim();
-        } else if (assistantMessage.startsWith("Yellow:")) {
-            color = "yellow";
-            assistantMessage = assistantMessage.substring(7).trim();
-        } else if (assistantMessage.startsWith("Red:")) {
-            color = "red";
-            assistantMessage = assistantMessage.substring(4).trim();
+        let colorExtracted = false;
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) {
+                break;
+            }
+            assistantMessage += new TextDecoder().decode(value);
+
+            if (!colorExtracted) {
+                if (assistantMessage.startsWith("Green:")) {
+                    color = "green";
+                    assistantMessage = assistantMessage.substring(6).trim();
+                    colorExtracted = true;
+                } else if (assistantMessage.startsWith("Yellow:")) {
+                    color = "yellow";
+                    assistantMessage = assistantMessage.substring(7).trim();
+                    colorExtracted = true;
+                } else if (assistantMessage.startsWith("Red:")) {
+                    color = "red";
+                    assistantMessage = assistantMessage.substring(4).trim();
+                    colorExtracted = true;
+                }
+            }
+
+            responseBox.innerHTML = `<div><b>Your Response:</b> ${userMessage}</div><br><div style="color: ${color};"><b>Intelligent Feedback (in progress):</b> ${assistantMessage}</div>`;
         }
-        
-        // Display the user message and assistant response
-        responseBox.innerHTML = `<div><b>Your Response:</b> ${userMessage}</div><br><div style="color: ${color};"><b>Intelligent Feedback:</b> ${assistantMessage}</div>`;
-        
         // Clear the input box
         inputBox.value = '';
     } catch (error) {
