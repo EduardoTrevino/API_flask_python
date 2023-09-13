@@ -28,7 +28,12 @@ def get_response():
     
     # Get the user ID and question from the URL parameters PostgreSQL\16rc1
     user_id = request.args.get('username')
+    if user_id is None:
+        user_id = "default_username"  # or handle this case appropriately as per your app's requirements
     question_message = request.args.get('question')
+    if question_message is None:
+        question_message = "No question provided"
+
     
     # Get the current usage count for the user ID from the database
     user = User.query.filter_by(user_id=user_id).first()
