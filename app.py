@@ -114,11 +114,11 @@ def get_response():
                     yield "END"  # Signal the end of the stream
             
             # Save the interaction data in the database
-            interaction = Interaction(user_id=user_id, question=question_message, learner_response=user_message, llm_response=assistant_message, timestamp=datetime.utcnow())
-            db.session.add(interaction)
-            db.session.commit()
+            # interaction = Interaction(user_id=user_id, question=question_message, learner_response=user_message, llm_response=assistant_message, timestamp=datetime.utcnow())
+            # db.session.add(interaction)
+            # db.session.commit()
 
-            yield "END"  # Signal the end of the stream
+            # yield "END"  # Signal the end of the stream
 
         
         return Response(stream_with_context(generate(user_message, question_message, user_id)), content_type='text/event-stream')
