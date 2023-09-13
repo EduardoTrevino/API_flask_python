@@ -3,10 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 import openai
 import os
 from datetime import datetime
+from urllib.parse import urlparse, urlunparse
 
 app = Flask(__name__)
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
+url = urlparse(os.environ.get('DATABASE_URL'))
+url = url._replace(scheme=url.scheme.replace('postgres', 'postgresql'))
+DATABASE_URL = urlunparse(url)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
