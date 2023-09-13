@@ -4,6 +4,7 @@ import openai
 import os
 from datetime import datetime
 from urllib.parse import urlparse, urlunparse
+from traceback import format_exc
 
 app = Flask(__name__)
 
@@ -83,6 +84,8 @@ def get_response():
 
         return jsonify(content=assistant_message)
     except Exception as e:
+        # Log the full error message and stack trace
+        app.logger.error(format_exc())
         # Rollback the database session if an error occurs
         db.session.rollback()
         return jsonify(error=str(e)), 500
