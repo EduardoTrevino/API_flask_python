@@ -25,16 +25,15 @@ def home():
 @app.route('/get-response', methods=['POST'])
 def get_response():
     
-    # Get the user ID and question from the URL parameters
+    # Get the user ID and question from the URL parameters PostgreSQL\16rc1
     user_id = request.args.get('username')
     question_message = request.args.get('question')
     
     # Get the current usage count for the user ID from the database
     user = User.query.filter_by(user_id=user_id).first()
     try:
+        last_user_id_entry = LastUserID.query.first()
         if not user:
-            # Get the last used user ID from the database
-            last_user_id_entry = LastUserID.query.first()
             if not last_user_id_entry:
                 last_user_id = 1
                 last_user_id_entry = LastUserID(last_user_id=last_user_id)
@@ -46,7 +45,6 @@ def get_response():
             user = User(user_id=str(last_user_id), usage_count=1)
             db.session.add(user)
             user_id = str(last_user_id)
-            db.session.add(user)
             db.session.commit()
         
         # If the usage count is 3 or more, create a new user ID and reset the usage count
@@ -109,6 +107,7 @@ class Interaction(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 if __name__ == "__main__":
+    #5432
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
 
