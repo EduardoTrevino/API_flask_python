@@ -82,18 +82,28 @@ async function getGPTResponse() {
     const responseBox = document.getElementById('responseBox');
 
     const userMessage = inputBox.value;
-    const questionText = questionBox.innerText; // Get the question text
+    // const questionText = questionBox.innerText; // Get the question text
+    const urlParams = new URLSearchParams(window.location.search);
+    const questionText = urlParams.get('question');
+    const user_id = urlParams.get('userID');
 
     try {
-        const response = await fetch('/get-response', {
+        // const response = await fetch('/get-response', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ 
+        //         content: userMessage, 
+        //         question: questionText
+        //     }),
+        // });
+        const response = await fetch('/get-response?username=' + encodeURIComponent(user_id) + '&question=' + encodeURIComponent(questionText), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 
-                content: userMessage, 
-                question: questionText
-            }),
+            body: JSON.stringify({ content: userMessage }),
         });
 
         if (!response.ok) {
