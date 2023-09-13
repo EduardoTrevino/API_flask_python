@@ -101,8 +101,17 @@ def get_response():
             
             assistant_message = ""
             for chunk in response:
-                assistant_message += chunk['choices'][0]['text'].strip()
-                yield chunk['choices'][0]['text'].strip()
+                if 'content' in chunk['choices'][0]['delta']:
+                    assistant_message += chunk['choices'][0]['delta']['content']
+                    yield chunk['choices'][0]['delta']['content']
+                
+                if 'finish_reason' in chunk['choices'][0] and chunk['choices'][0]['finish_reason'] == 'stop':
+                    # Save the interaction data in the database
+                    interaction = Interaction(user_id=user_id, question=question_message, learner_response=user_message, llm_response=assistant_message, timestamp=datetime.utcnow())
+                    db.session.add(interaction)
+                    db.session.commit()
+                    
+                    yield "END"  # Signal the end of the stream
             
             # Save the interaction data in the database
             interaction = Interaction(user_id=user_id, question=question_message, learner_response=user_message, llm_response=assistant_message, timestamp=datetime.utcnow())
