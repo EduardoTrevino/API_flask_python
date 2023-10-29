@@ -37,7 +37,7 @@ def handle_request():
     data = request.json
     prompt = data.get('prompt', 'Default prompt')
     previous_evaluation = data.get('previousEvaluation', 'N/A')
-    learner_response = data.get('learnerResponse', "This is the learner's first attempt.")
+    learner_response = data.get('learnerResponse', "This is the learners first attempt.")
 
     session['prompt'] = prompt
     session['previousEvaluation'] = previous_evaluation
@@ -49,7 +49,7 @@ def handle_request():
 def get_response_from_session():
     prompt = session.get('prompt', 'Default prompt')
     previous_evaluation = session.get('previousEvaluation', 'N/A')
-    learner_response = session.get('learnerResponse', "This is the learner's first attempt.")
+    learner_response = session.get('learnerResponse', "This is the learners first attempt.")
 
     return generate_and_stream_response(prompt, previous_evaluation, learner_response)
 
