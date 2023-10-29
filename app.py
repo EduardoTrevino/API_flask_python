@@ -38,6 +38,18 @@ def handle_request():
     previous_evaluation = data.get('previousEvaluation', 'N/A')
     learner_response = data.get('learnerResponse', "This is the learner's first attempt.")
 
+    session['prompt'] = prompt
+    session['previousEvaluation'] = previous_evaluation
+    session['learnerResponse'] = learner_response
+
+    return print("successfully stored the data")
+
+@app.route('/get-response-from-session', methods=['GET'])
+def get_response_from_session():
+    prompt = session.get('prompt', 'Default prompt')
+    previous_evaluation = session.get('previousEvaluation', 'N/A')
+    learner_response = session.get('learnerResponse', "This is the learner's first attempt.")
+
     return generate_and_stream_response(prompt, previous_evaluation, learner_response)
 
 def generate_and_stream_response(prompt, previous_evaluation, learner_response):

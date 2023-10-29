@@ -62,7 +62,7 @@ body {
         const responseBox = document.getElementById('responseBox');
 
         try {
-            const response = await fetch('/generate-and-stream-response', {
+            const response = await fetch('/get-response-from-session', {
                 method: 'GET'
             });
 
