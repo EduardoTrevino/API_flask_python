@@ -18,11 +18,52 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+@app.route('/question-page')
+def question_page():
+    return render_template('question_page.html')
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
+@app.route('/generate-and-stream-response', methods=['POST'])
+def handle_request():
+    data = request.json
+    prompt = data.get('prompt', 'Default prompt')
+    previous_evaluation = data.get('previousEvaluation', 'N/A')
+    learner_response = data.get('learnerResponse', "This is the learner's first attempt.")
+
+    return generate_and_stream_response(prompt, previous_evaluation, learner_response)
+
+def generate_and_stream_response(prompt, previous_evaluation, learner_response):
+    try:
+        # Generating text using GPT-3.5 Turbo
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": previous_evaluation},
+                {"role": "user", "content": learner_response}
+            ],
+            stream=True
+        )
+
+        # Streaming the response
+        def stream_response():
+            assistant_message = ""
+            for chunk in response:
+                if 'content' in chunk['choices'][0]['delta']:
+                    assistant_message += chunk['choices'][0]['delta']['content']
+                    yield chunk['choices'][0]['delta']['content']
+                
+                if 'finish_reason' in chunk['choices'][0] and chunk['choices'][0]['finish_reason'] == 'stop':
+                    yield "END"  # Signal the end of the stream
+
+        return Response(stream_with_context(stream_response()), content_type='text/event-stream')
+
+    except Exception as e:
+        return str(e)  # Return the error message in case of failure
+    
 @app.route('/get-response', methods=['POST'])
 def get_response():
     

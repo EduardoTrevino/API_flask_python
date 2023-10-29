@@ -55,7 +55,7 @@
 </style>
 </head>
 <body>
-
+<a href="/question-page" class="submit-btn">Go to Question Page</a>
 <div class="container">
     <div id="questionBox"></div> <!-- Placeholder for the question -->
     <div class="input-area">
@@ -88,16 +88,6 @@ async function getGPTResponse() {
     const user_id = urlParams.get('userID');
 
     try {
-        // const response = await fetch('/get-response', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ 
-        //         content: userMessage, 
-        //         question: questionText
-        //     }),
-        // });
         const response = await fetch('/get-response?username=' + encodeURIComponent(user_id) + '&question=' + encodeURIComponent(questionText), {
             method: 'POST',
             headers: {
@@ -109,25 +99,6 @@ async function getGPTResponse() {
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
-
-        // const data = await response.json();
-        // let assistantMessage = data.content.trim();
-
-        // // Extract the color cue and set the color variable
-        // let color = "black"; // Default color
-        // if (assistantMessage.startsWith("Green:")) {
-        //     color = "green";
-        //     assistantMessage = assistantMessage.substring(6).trim();
-        // } else if (assistantMessage.startsWith("Yellow:")) {
-        //     color = "yellow";
-        //     assistantMessage = assistantMessage.substring(7).trim();
-        // } else if (assistantMessage.startsWith("Red:")) {
-        //     color = "red";
-        //     assistantMessage = assistantMessage.substring(4).trim();
-        // }
-        
-        // // Display the user message and assistant response
-        // responseBox.innerHTML = `<div><b>Your Response:</b> ${userMessage}</div><br><div style="color: ${color};"><b>Intelligent Feedback:</b> ${assistantMessage}</div>`;
         const reader = response.body.getReader();
         let assistantMessage = "";
         let color = "black"; // Default color

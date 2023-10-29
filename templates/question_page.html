@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Page</title>
+    <style>
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #808080;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    padding-top: 20px; /* Adjust as needed for spacing from the top */
+}
+
+.input-box {
+    width: 100%;
+    padding-left: 570px;
+    margin-top: 20px;
+    font-size: 24px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.question-label {
+    font-size: 24px;
+}
+
+/* Style for the placeholder where streamed text will appear */
+#streamedText {
+    margin-top: 20px; /* Adjust as needed */
+    padding: 10px; /* Adjust as needed */
+    background-color: #ffffff; /* Adjust color as needed */
+    color: #000000; /* Adjust text color as needed */
+    font-size: 18px; /* Adjust font size as needed */
+    text-align: left; /* Adjust text alignment as needed */
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="questionInput" class="question-label">Question:</label>
+        <input type="text" id="questionInput" class="input-box">
+        <div id="streamedText"></div>
+    </div>
+</body>
+<script>
+    // Create a new EventSource that connects to the server endpoint
+    const eventSource = new EventSource('/generate-and-stream-response');
+
+    // Function to handle incoming messages
+    eventSource.onmessage = function(event) {
+        const data = event.data;
+
+        // Check for the end of the stream
+        if (data === "END") {
+            eventSource.close(); // Close the connection
+        } else {
+            // Append the received text to the placeholder element
+            document.getElementById("streamedText").innerHTML += data;
+        }
+    };
+
+    // Handle any errors
+    eventSource.onerror = function(event) {
+        console.error("EventSource failed:", event);
+        eventSource.close(); // Close the connection on error
+    };
+</script>
+</html>
