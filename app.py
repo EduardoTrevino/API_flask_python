@@ -20,7 +20,7 @@ db = SQLAlchemy(app)
 
 @app.route('/question-page')
 def question_page():
-    return render_template('question_page.html')
+    return render_template('worked_example_1.html')
 
 @app.route('/')
 def home():
