@@ -57,26 +57,41 @@ body {
     </div>
 </body>
 <script>
-    // Create a new EventSource that connects to the server endpoint
-    const eventSource = new EventSource('/generate-and-stream-response');
+    // Function to handle the streaming of text from the LLM
+    async function streamLLMResponse() {
+        const responseBox = document.getElementById('responseBox');
 
-    // Function to handle incoming messages
-    eventSource.onmessage = function(event) {
-        const data = event.data;
+        try {
+            const response = await fetch('/generate-and-stream-response', {
+                method: 'GET'
+            });
 
-        // Check for the end of the stream
-        if (data === "END") {
-            eventSource.close(); // Close the connection
-        } else {
-            // Append the received text to the placeholder element
-            document.getElementById("streamedText").innerHTML += data;
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const reader = response.body.getReader();
+            let assistantMessage = "";
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) {
+                    break;
+                }
+                assistantMessage += new TextDecoder().decode(value);
+                if (assistantMessage.endsWith("END")) {
+                    assistantMessage = assistantMessage.substring(0, assistantMessage.length - 3);  // Remove the "END" from the message
+                    break;  // Break out of the loop as we have reached the end of the stream
+                }
+
+                responseBox.innerHTML = `<div> ${assistantMessage}</div>`;
+            }
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
+            responseBox.innerHTML += `<div style="color: red;">Error: ${error}</div>`;
         }
-    };
+    }
 
-    // Handle any errors
-    eventSource.onerror = function(event) {
-        console.error("EventSource failed:", event);
-        eventSource.close(); // Close the connection on error
-    };
+    // Call the function to start streaming the LLM response
+    streamLLMResponse();
 </script>
 </html>
