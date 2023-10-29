@@ -54,13 +54,14 @@ def get_response_from_session():
     return generate_and_stream_response(prompt, previous_evaluation, learner_response)
 
 def generate_and_stream_response(prompt, previous_evaluation, learner_response):
+
+    prompt = prompt + " " + previous_evaluation
     try:
         # Generating text using GPT-3.5 Turbo
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": prompt},
-                {"role": "user", "content": previous_evaluation},
                 {"role": "user", "content": learner_response}
             ],
             stream=True
