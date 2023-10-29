@@ -5,6 +5,10 @@ import os
 from datetime import datetime
 from urllib.parse import urlparse, urlunparse
 from traceback import format_exc
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Generate a random secret key
@@ -43,6 +47,10 @@ def handle_request():
     session['previousEvaluation'] = previous_evaluation
     session['learnerResponse'] = learner_response
 
+    # Log the received data
+    logging.info(f"Received data: Prompt: {prompt}, Previous Evaluation: {previous_evaluation}, Learner Response: {learner_response}")
+
+
     return "successfully stored the data"
 
 @app.route('/get-response-from-session', methods=['GET'])
@@ -50,6 +58,9 @@ def get_response_from_session():
     prompt = session.get('prompt', 'Default prompt')
     previous_evaluation = session.get('previousEvaluation', 'N/A')
     learner_response = session.get('learnerResponse', "This is the learners first attempt.")
+
+    # Log the retrieved session data
+    logging.info(f"Retrieved from session: Prompt: {prompt}, Previous Evaluation: {previous_evaluation}, Learner Response: {learner_response}")
 
     return generate_and_stream_response(prompt, previous_evaluation, learner_response)
 
