@@ -7,6 +7,7 @@ from urllib.parse import urlparse, urlunparse
 from traceback import format_exc
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)  # Generate a random secret key
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 url = urlparse(os.environ.get('DATABASE_URL'))
