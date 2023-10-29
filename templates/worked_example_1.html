@@ -48,7 +48,8 @@
         <strong>Context:</strong> Provide relevant details of the situation.<br>
         <strong>Expectation:</strong> Describe the expected outcome.</p>
 
-        <button class="next-button" onclick="sendData(); window.location.href='question_page'">→</button>
+        <!-- <button class="next-button" onclick="sendData(); window.location.href='question_page'">→</button> -->
+        <button class="next-button" onclick="sendData()">→</button>
     </div>
 </body>
 <script>
@@ -133,8 +134,7 @@ Rubric for Evaluating RACE prompt engineering prompts
 - Poor (0-5 points): Prompt is egocentric, lacking empathy and clarity.
 
 Total Score: ___ / 100'
---------
-`;
+--------`;
         const previousEvaluation = "N/A";
         const learnerResponse = "This is the learner's first attempt.";
     
