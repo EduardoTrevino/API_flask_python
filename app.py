@@ -43,7 +43,7 @@ def handle_request():
     session['previousEvaluation'] = previous_evaluation
     session['learnerResponse'] = learner_response
 
-    return print("successfully stored the data")
+    return "successfully stored the data"
 
 @app.route('/get-response-from-session', methods=['GET'])
 def get_response_from_session():
