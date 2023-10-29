@@ -48,7 +48,7 @@
         <strong>Context:</strong> Provide relevant details of the situation.<br>
         <strong>Expectation:</strong> Describe the expected outcome.</p>
 
-        <button class="next-button" onclick="sendData(); window.location.href='question_page.html'">→</button>
+        <button class="next-button" onclick="sendData(); window.location.href='question_page'">→</button>
     </div>
 </body>
 <script>
@@ -74,7 +74,7 @@
         .then(data => {
             console.log('Success:', data);
             // Redirect to question_page.html
-            window.location.href = 'question_page.html';
+            window.location.href = 'question_page';
         })
         .catch((error) => {
             console.error('Error:', error);

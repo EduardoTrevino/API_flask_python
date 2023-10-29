@@ -18,9 +18,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-@app.route('/question-page')
-def question_page():
+@app.route('/worked_example_1')
+def worked_example_1():
     return render_template('worked_example_1.html')
+
+@app.route('/question_page')
+def question_page():
+    return render_template('question_page.html')
+
 
 @app.route('/')
 def home():
