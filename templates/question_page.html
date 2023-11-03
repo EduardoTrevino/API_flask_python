@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Question Page</title>
     <style>
 body {
     font-family: Helvetica, Arial, sans-serif;
-    background-color: #808080;
+    background-color: #1C1C1E;
     color: white;
     margin: 0;
     padding: 0;
@@ -23,15 +24,27 @@ body {
     padding-top: 20px; /* Adjust as needed for spacing from the top */
 }
 
+.input-box-wrapper {
+    position: relative;
+    width: 70%; /* Adjust width as needed */
+    margin-left: 15%; /* Adjust to move off-center left */
+    margin-right: 15%; /* Adjust to move off-center right */
+}
+
 .input-box {
     width: 100%;
-    padding-left: 570px;
+    padding-left: 10px;
     margin-top: 20px;
     font-size: 24px;
     color: white;
     background-color: transparent;
-    border: none;
     outline: none;
+    border: none;
+    padding-right: 50px;
+}
+
+.input-box:hover {
+    cursor: pointer;
 }
 
 .question-label {
@@ -42,21 +55,102 @@ body {
 #streamedText {
     margin-top: 20px; /* Adjust as needed */
     padding: 10px; /* Adjust as needed */
-    background-color: #808080; /* Adjust color as needed */
+    background-color: #1C1C1E; /* Adjust color as needed */
     color: #ffff; /* Adjust text color as needed */
-    font-size: 18px; /* Adjust font size as needed */
+    font-size: 24px; /* Adjust font size as needed */
     text-align: left; /* Adjust text alignment as needed */
+}
+
+/* Styles for the circular button */
+.submit-button {
+    position: absolute;
+    right: 5px; /* Adjust as needed */
+    bottom: 5px; /* Adjust as needed, align with input box */
+    /* background-color: #218aff; */
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    font-size: 20px; /* Adjust size as needed */
+    text-align: center;
+    line-height: 36px; /* Vertically center the arrow */
+    cursor: pointer;
 }
     </style>
 </head>
 <body>
     <div class="container">
-        <label for="questionInput" class="question-label">Q</label>
+        <label for="questionInput" class="question-label">Question 1</label>
         <div id="responseBox"></div>
-        <input type="text" id="questionInput" class="input-box">
+        <div class="input-box-wrapper">
+            <textarea id="questionInput" class="input-box" rows="2"></textarea> <!-- Changed to textarea -->
+            <button class="submit-button" class="submit-button" onclick="sendUserResponse()">
+                <i class="fas fa-arrow-up"></i> <!-- Font Awesome icon -->
+            </button>
+        </div>
+        <div id="streamedResponse"></div> <!-- New label/div for streamed response -->
     </div>
 </body>
 <script>
+    // Function to handle the submission of the user's input
+    async function sendUserResponse() {
+        const questionInput = document.getElementById('questionInput');
+        const responseBox = document.getElementById('responseBox');
+        const submitButton = document.getElementById('submitButton');
+
+        const userText = questionInput.value;
+        const responseText = responseBox.textContent; // Get text from responseBox
+
+        // Make the button disappear
+        submitButton.style.display = 'none';
+
+        // Send the user's text and the previous response to the backend
+        const response = await fetch('/store-front-end-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userInput: userText, previousResponse: responseText })
+        });
+
+        streamRealTimeFeedback();
+    }
+
+    // Function to stream the real-time feedback from the backend
+    async function streamRealTimeFeedback() {
+        const streamedResponseBox = document.getElementById('streamedResponse');
+
+        try {
+            const response = await fetch('/send-llm-feedback-and-eval', {
+                method: 'GET'
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const reader = response.body.getReader();
+            let streamedMessage = "";
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) {
+                    break;
+                }
+                streamedMessage += new TextDecoder().decode(value);
+                if (streamedMessage.endsWith("END")) {
+                    streamedMessage = streamedMessage.substring(0, streamedMessage.length - 3);  // Remove the "END" from the message
+                    break;  // Break out of the loop as we have reached the end of the stream
+                }
+
+                streamedResponseBox.innerHTML = `<div> ${streamedMessage}</div>`;
+            }
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
+            streamedResponseBox.innerHTML += `<div style="color: red;">Error: ${error}</div>`;
+        }
+    }
     // Function to handle the streaming of text from the LLM
     async function streamLLMResponse() {
         const responseBox = document.getElementById('responseBox');
@@ -93,5 +187,15 @@ body {
 
     // Call the function to start streaming the LLM response
     streamLLMResponse();
+    // Additional script for auto-resizing the textarea
+    document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.getElementById('questionInput');
+    textarea.addEventListener('input', autoResize, false);
+
+    function autoResize() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    }
+});
 </script>
 </html>
