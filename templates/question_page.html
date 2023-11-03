@@ -41,6 +41,17 @@ body {
     outline: none;
     border: none;
     padding-right: 50px;
+    resize: none;
+    border-bottom: 1px solid white;
+    /* lets make it a bit prettier */
+    /* border-radius: 5px;
+    transition: border-bottom 0.3s; */
+    /* lets add a little animation */
+    /* transition-timing-function: ease-in-out; */
+}
+
+.input-box:focus {
+    outline: none; /* Remove the default focus outline */
 }
 
 .input-box:hover {
@@ -62,21 +73,22 @@ body {
 }
 
 /* Styles for the circular button */
-.submit-button {
+.submitButton {
     position: absolute;
-    right: 5px; /* Adjust as needed */
-    bottom: 5px; /* Adjust as needed, align with input box */
+    right: -28px; /* Adjust as needed */
+    bottom: 8px; /* Adjust as needed, align with input box */
     /* background-color: #218aff; */
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 40px; /* Adjust size as needed */
-    height: 40px; /* Adjust size as needed */
-    font-size: 20px; /* Adjust size as needed */
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+    font-size: 16px; /* Adjust size as needed */
     text-align: center;
-    line-height: 36px; /* Vertically center the arrow */
+    line-height: 30px; /* Vertically center the arrow */
     cursor: pointer;
+    z-index: 2;
 }
     </style>
 </head>
@@ -86,7 +98,7 @@ body {
         <div id="responseBox"></div>
         <div class="input-box-wrapper">
             <textarea id="questionInput" class="input-box" rows="2"></textarea> <!-- Changed to textarea -->
-            <button class="submit-button" class="submit-button" onclick="sendUserResponse()">
+            <button class="submitButton" class="submit-button" onclick="sendUserResponse()">
                 <i class="fas fa-arrow-up"></i> <!-- Font Awesome icon -->
             </button>
         </div>
@@ -102,6 +114,8 @@ body {
 
         const userText = questionInput.value;
         const responseText = responseBox.textContent; // Get text from responseBox
+
+        // responseBox.innerHTML = 'Button clicked!'; TEST
 
         // Make the button disappear
         submitButton.style.display = 'none';
