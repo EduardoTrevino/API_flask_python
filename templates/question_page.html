@@ -98,7 +98,7 @@ body {
         <div id="responseBox"></div>
         <div class="input-box-wrapper">
             <textarea id="questionInput" class="input-box" rows="2"></textarea> <!-- Changed to textarea -->
-            <button class="submitButton" class="submit-button" onclick="sendUserResponse()">
+            <button id="submitButton" class="submitButton" onclick="sendUserResponse()">
                 <i class="fas fa-arrow-up"></i> <!-- Font Awesome icon -->
             </button>
         </div>
@@ -122,16 +122,41 @@ body {
         submitButton.style.display = 'none';
 
         // Send the user's text and the previous response to the backend
-        const response = await fetch('/store-front-end-data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userInput: userText, previousResponse: responseText })
-        });
+    //     const response = await fetch('/store-front-end-data', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ userInput: userText, previousResponse: responseText })
+    //     });
 
-        streamRealTimeFeedback();
+    //     streamRealTimeFeedback();
+    // }
+        try {
+            // Send the user's text and the previous response to the backend
+            const response = await fetch('/store-front-end-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userInput: userText, previousResponse: responseText })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+
+            // Assuming the backend sends back JSON
+            const responseData = await response.json();
+            console.log(responseData.message); // Or handle this message as needed
+
+            // If everything went okay, start streaming
+            streamRealTimeFeedback();
+        } catch (error) {
+            console.error('Fetch error:', error);
+            streamedResponse.innerHTML = 'error';; // Show the button again or handle error differently
     }
+}
 
     // Function to stream the real-time feedback from the backend
     async function streamRealTimeFeedback() {
