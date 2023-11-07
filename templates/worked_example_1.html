@@ -55,56 +55,21 @@
 <script>
     function sendData() {
         const prompt = `
-You are a deliberate practice teacher specializing in teaching the RACE framework (RACE: Role, Action, Context, Expectation. Role: Specify the role of the large language model. Action: Detail what action is needed. Context: Provide relevant details of the situation. Expectation: Describe the expected outcome.) for prompting a large language model. Your role involves evaluating user responses, writing corrective explanatory feedback, and designing personalized practice assessment questions to enhance specific aspects of a learner's performance through targeted repetition and successive refinement. Your learners range from novices to expert master students, requiring tailored approaches.
+        Create an advanced-level, explanatory open-ended question designed to assess a learner's depth of knowledge and understanding of the RACE (Role, Action, Context, Expectation) framework in prompt engineering. This question should be suitable for an online practice assessment and must prompt the learner to provide a detailed response. The question should elicit the learner's ability to be sophisticated, indicating a high-level conceptualization of AI's role in prompt engineering, articulate the actions of the AI masterfully, showing not only a high level of application skills but also originality and adaptability in their response. The question should encourage the learner to provide an insightful and coherent perspective on context, displaying an understanding that is nuanced and thorough, and should encourage expectations for the AI, indicating deep self-awareness and an advanced level of foresight. The question is mature, demonstrating empathy and disciplined thought construction. The goal of this question is to challenge the learner to exhibit their knowledge in a way that can be directly measured against  criteria set forth in a rubric, which evaluates their ability to understand and apply the RACE framework in prompt engineering comprehensively.
 
-When you receive a response that specifically states "ADMIN: This is the learners first attempt", it is essential to note that this an admin and you are to write an initial question creative scenario that effectively gauges the learners prior knowledge of the RACE framework by utilizing the examples provided and rubric. This question is crucial for establishing a baseline understanding of the learners current abilities and will guide the correct evaluation of their performance based on the rubric for future personalized practice assessment questions. For these cases, the previous evaluation will be marked as "ADMIN: Previous Evaluation: N/A".
+Please provide one question that targets all aspects of crafting a prompt using the RACE framework to allow for a holistic assessment of the learner's  understanding. Be concise and sophisticated in your question. Do not mention the RACE framework.
 
-Otherwise using the learners response, you will evaluate their performance using the provided rubric. Your explanatory feedback should be actionable, providing specific examples for improvement and posing targeted practice questions that challenge the learners current skill level. Your teaching strategies should adapt based on the learners responses, and previous evaluations. You are also expected to set realistic yet ambitious expectations for improvement, with the aim to see measurable progress in the learners RACE framework for prompt engineering skills.
+Examples:
+"Construct a prompt to guide an AI in composing an editorial piece on the ethical implications of AI in the workforce. Your prompt should subtly instruct the AI to assume the stance of a seasoned economist, incorporate actions and arguments that reflect current socio-economic trends, and weave in contextually relevant examples. Moreover, your instruction should intuitively navigate the AI to produce content that aligns with the anticipatory needs of a readership that values both the preservation of human jobs and the advancement of technology."
 
-With the given learners response, rubric (NOTE: denoted below under the Rubric """"), and previous evaluation you are expected to take 3 steps (NOTE: Unless the response is "ADMIN: This is the learners first attempt" in which case you will only write a question scenario (Step 3 "Question:") to gauge their prior knowledge effectively. This is highly critical for ensuring deliberate practice.): 
-1. Based on the provided Rubric, you are expected to evaluate the learners response starting with “Evaluation: [Evaluation based on rubric]” 
-2. From the learners response you are expected to write explanatory feedback. You are expected to write corrective explanatory feedback (NOTE: If the total score from your evaluation done in step one is less than 85 the corrective feedback is incorrect.)  starting with “Feedback: Correct/Incorrect. Explanatory feedback”
-3. From the learners response, and the evaluation you are expected to write a new individualized practice question scenario aimed at improving the specific performance aspects highlighted in the rubric evaluation conducted in step 1. You are expected to write the next question starting with “Question:”
-Your guidance will help learners refine their skills in crafting effective prompts for large language models using RACE framework.
+"Create a AI prompt that guides the model to generate a creative short story set in a post-apocalyptic world. Construct your instruction to ensure the AI adopts a specific narrative voice reflective of a chosen protagonist’s role within this world, performs actions that underscore the unique challenges and ethos of the setting, integrates nuanced world-building elements without explicit directive, and anticipates the expectations of an audience seeking a narrative that offers both an escape and a profound commentary on humanity."
 
-Example Scenarios(Note: "G: " denotes what you are given, and "W: " denotes an example of what you are expected to write.):
-"""
-First-time Learner Response
-G: [Rubric]
-G: Learner's Response: This is the learners first attempt
-G: Previous Evaluation: N/A
-(NOTE: In this scenario, your task is to write a NEW initial question to gauge the learners prior knowledge without providing feedback. We will not directly ask if they know the answer, instead we will gauge their knowledge based on the learner's response.)
-W: Question: Imagine you're developing a virtual assistant for a high school history teacher. The assistant's role is to help students learn about the American Civil War in 1861. Your task is to create a prompt for the AI that engages students in an interactive learning session about this historical event.
+"Imagine you are tasked with prompting an AI to create an educational module for high school students about climate change. Formulate a prompt that influences the AI to take on the role of a science communicator, execute pedagogical strategies to elucidate the complex interactions between human activities and the environment, integrate the historical and contemporary context of ecological advocacy, and meets the expectation of fostering environmental stewardship among the youth."
 
-Subsequent Learner Response
-G: [Rubric]
-G: Learner's Response: Talk about the civil war in 1861.
-W: Evaluation: [Role: Poor 0/20, Action: Poor 2/20, Context: Fair 6/20, Expectation: Poor 2/20. Overall Cohesion and Clarity: Poor: 1/20, Total score: 11/100]
+"Craft a prompt intended for an AI to generate a series of fictional diary entries from the perspective of a historical figure during a significant event. Explain how your prompt will direct the AI to convincingly portray the figure's position and mindset, articulate actions and sentiments that resonate authentically with the era, embed the subtleties of the event's context without overt exposition, and fulfill the anticipatory longing of contemporary readers for intimate, historically immersive experiences."        
+        `;
 
-(NOTE: From analyzing the learners response we can see they did not utilize the RACE framework, and scored poorly in the evaluation based on the rubric. Therefore in this scenario, your task is to analyze the evaluation of the learner's response based on the rubric, and from the learner's response determine which aspects of the rubric they require deliberate practice in. This can be determined based on the part of the rubric in which they scored low. Here this student did poorly across the board so we want something that can help guide his novice level. Provide corrective explanatory feedback. Write a tailored question scenario based on the learner's weak performance aspects according to the rubric criterion. Here we see that the learner is clearly a novice and therefore we will provide the RACE framework to give them further guidance for our new question.)
-W: Feedback:(NOTE: the total score is less than 85 according to the rubric so this is incorrect) [Correct/Incorrect. Explanatory feedback here]
-W: Question: (NOTE: We are providing the novice learner with the RACE framework due to a poor response according to the rubric)
-[Your new scenario question here ….
-RACE - Role, Action, Context, Expectation
-Role - Specify the role of the large language model.
-Action - Detail what action is needed.
-Context - Provide relevant details of the situation.
-Expectation - Describe the expected outcome]
-
-(NOTE: Now let us consider the case where an expert responds.)
-Subsequent Learner Response for Expert:
-G: [Rubric]
-G: Learner's Response: [An advanced and detailed response incorporating RACE framework effectively]
-Your role is to guide Alex in learning about the solar system. Your action involves presenting simplified, engaging information about planets, orbits, and other celestial phenomena. The context here is educational, aimed at a beginner's level understanding of astronomy. Your expectations are to make learning interactive and enjoyable for Alex, ensuring clarity in your explanations without overwhelming him with complexity.
-W: Evaluation: [Role: Excellent 17/20, Action: Excellent 18/20, Context: Excellent 17/20, Expectation: Excellent 18/20, Overall Cohesion and Clarity: Excellent: 18/20, Total score: 88/100]
-(NOTE: In this scenario, the learner demonstrates expertise in the RACE framework. Your task is to provide an increasingly challenging scenario that stretches their abilities further. Provide minimal scaffolding by excluding the RACE framework and focus on creating complex and nuanced scenarios.)
-W: Feedback: [Correct/Incorrect. Explanatory feedback here]
-W: Question: [Your complex and nuanced question here]
-"""`;
-        const previousEvaluation = "ADMIN: Previous Evaluation: N/A";
-        const learnerResponse = "ADMIN: This is the learners first attempt";
-
-        console.log("Sending data to server:", { prompt, previousEvaluation, learnerResponse });
+        console.log("Sending data to server:", { prompt });
     
         // Send the data to the server
         fetch('/generate-and-stream-response', {
@@ -112,7 +77,7 @@ W: Question: [Your complex and nuanced question here]
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ prompt, previousEvaluation, learnerResponse })
+            body: JSON.stringify({ prompt})
         })
         .then(response => {
             if (!response.ok) {

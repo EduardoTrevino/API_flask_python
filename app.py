@@ -154,74 +154,29 @@ Example 2
 def handle_request():
     data = request.json
     prompt = data.get('prompt', 'Default prompt')
-    previous_evaluation = data.get('previousEvaluation', 'N/A')
-    learner_response = data.get('learnerResponse', "This is the learners first attempt.")
-
     session['prompt'] = prompt
-    session['previousEvaluation'] = previous_evaluation
-    session['learnerResponse'] = learner_response
 
     # Log the received data
-    logging.info(f"Received data: Prompt: {prompt}, Previous Evaluation: {previous_evaluation}, Learner Response: {learner_response}")
-
+    logging.info(f"Received data: Prompt: {prompt}")
 
     return "successfully stored the data"
 
 @app.route('/get-response-from-session', methods=['GET'])
 def get_response_from_session():
     prompt = session.get('prompt', 'Default prompt')
-    previous_evaluation = session.get('previousEvaluation', 'N/A')
-    learner_response = session.get('learnerResponse', "This is the learners first attempt.")
 
     # Log the retrieved session data
-    logging.info(f"Retrieved from session: Prompt: {prompt}, Previous Evaluation: {previous_evaluation}, Learner Response: {learner_response}")
+    logging.info(f"Retrieved from session: Prompt: {prompt}")
 
-    return generate_and_stream_response(prompt, previous_evaluation, learner_response)
+    return generate_and_stream_response(prompt)
 
-def generate_and_stream_response(prompt, previous_evaluation, learner_response):
-    rubric = """
-Rubric
-Rubric for Evaluating RACE prompt engineering prompts
-1. Role (20 points)
-- Excellent (16-20 points): Role is explained with sophistication, showing comprehensive understanding of AI.
-- Good (11-15 points): Role is systematically defined, reflecting a good grasp of AI.
-- Fair (6-10 points): Role is somewhat developed but lacks depth in understanding AI.
-- Poor (0-5 points): Role is naively or inaccurately explained.
-
-2. Action (20 points)
-- Excellent (16-20 points): Actions are masterfully defined, showing excellent application skills.
-- Good (11-15 points): Actions are skilled, showing competent application in context.
-- Fair (6-10 points): Actions show limited but growing adaptability.
-- Poor (0-5 points): Actions are novice, showing reliance on scripted skills.
-
-3. Context (20 points)
-- Excellent (16-20 points): Context is insightful and coherent, offering a thorough perspective.
-- Good (11-15 points): Context is considered, showing awareness of different viewpoints.
-- Fair (6-10 points): Context is aware but weak in considering the worth of each viewpoint.
-- Poor (0-5 points): Context is uncritical or irrelevant.
-
-4. Expectation (20 points)
-- Excellent (16-20 points): Expectations are wise, reflecting deep self-awareness.
-- Good (11-15 points): Expectations are circumspect, showing good self-awareness.
-- Fair (6-10 points): Expectations are thoughtful but may lack full awareness.
-- Poor (0-5 points): Expectations are unreflective or unrealistic.
-
-5. Overall Cohesion and Clarity (20 points)
-- Excellent (16-20 points): Prompt is mature, showing empathy and disciplined construction.
-- Good (11-15 points): Prompt is sensitive, demonstrating an understanding of learner perspectives.
-- Fair (6-10 points): Prompt shows some capacity for empathy but is limited.
-- Poor (0-5 points): Prompt is egocentric, lacking empathy and clarity.
-
-Total Score: ___ / 100
-"""
-    prompt = prompt + " " + rubric + " " + previous_evaluation
+def generate_and_stream_response(prompt):
     try:
         # Generating text using GPT-3.5 Turbo
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": prompt},
-                {"role": "user", "content": learner_response}
             ],
             stream=True
         )
