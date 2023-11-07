@@ -53,8 +53,8 @@ def store_front_end_data():
 # This route will handle the GET request to send the LLM feedback and evaluation
 @app.route('/send-llm-feedback-and-eval', methods=['GET'])
 def send_llm_feedback_and_eval():
-    question_input = session.get('userInput', 'No user input found')
-    user_response = session.get('previousResponse', 'No previous response found')
+    question_input = session.get('questionInput', 'No user input found')
+    user_response = session.get('userResponse', 'No previous response found')
 
     # Log the retrieved session data
     logging.info(f"Retrieved from session: UserInput: {question_input}, PreviousResponse: {user_response}")
@@ -62,7 +62,7 @@ def send_llm_feedback_and_eval():
     return llm_for_feedback_and_eval(question_input, user_response)
 
 # Function to process with LLM and stream response
-def llm_for_feedback_and_eval(user_input, previous_response):
+def llm_for_feedback_and_eval(question_input, user_response):
     try:
         # Generating text using GPT-3.5 Turbo
         response = openai.ChatCompletion.create(
@@ -112,7 +112,6 @@ Example 1
 [Rubric]
 
 [Question: Imagine you're developing a virtual assistant for a high school history teacher. The assistant's role is to help students learn about the American Civil War in 1861. Your task is to create a prompt for the AI that engages students in an interactive learning session about this historical event.]
-
 [Response: Talk about the civil war in 1861.]
 
 [Feedback: Incorrect. While your response, "Talk about the civil war in 1861," marks an initial effort to address the historical topic, it significantly lacks the depth required to fulfill the educational objectives. A robust role for the AI, which is absent in your reply, could be exemplified by a statement such as, "You are an AI expert in guiding students through the complexities of the American Civil War." The action you've chosen, represented by the verb "Talk," needs further development to actively craft an engaging and educational prompt. Consider what specific actions an assistant should facilitate to aid student learning, particularly in a historical context. In terms of context, your response briefly mentions the type and time of the conflict but omits crucial elements like locations, significant battles, and figures, all of which are essential for high school learners to grasp the subject's full scope. The expected outcome of your prompt should enable the AI to not just relay information but to tailor an interactive and educational dialogue appropriate for the target audience. It's vital to harness the potential of AI to create an immersive learning environment. With more detailed and thoughtfully constructed prompts, you can expect to foster a virtual assistant that truly enhances the educational experience for students. There is considerable potential in your ideas; by incorporating these specific details into your prompt, you can craft an engaging narrative that brings history to life. Keep exploring and refining your approach!]
@@ -124,11 +123,11 @@ Example 2
 [Question: You are an AI assistant tasked with helping a high school student, Alex, understand the basics of the solar system for a science project]
 [Response: Your role is to guide Alex in learning about the solar system. Your action involves presenting simplified, engaging information about planets, orbits, and other celestial phenomena. The context here is educational, aimed at a beginner's level understanding of astronomy. Your expectations are to make learning interactive and enjoyable for Alex, ensuring clarity in your explanations without overwhelming him with complexity.]
 
-[Feedback: Correct. Excellent effort in crafting your prompt! The response effectively delineates the role of the AI as a guide for Alex, showing a sophisticated understanding of how the AI can facilitate learning. Your action steps are well-defined, presenting the complex subject of the solar system in an engaging and simplified manner appropriate for a high school student's level. The educational context is carefully considered, maintaining the focus on beginner-friendly content while fostering an interest in astronomy. The expectations are thoughtfully set to make the learning process interactive and enjoyable, indicating a deep self-awareness of the student's educational needs. The clarity and cohesion with which you've constructed this prompt reflect a disciplined approach, demonstrating an understanding of both the learner's perspective and the educational goals. To further challenge your creativity and depth of detail, consider exploring how you might incorporate adaptive learning techniques to tailor the information to Alex’s progress. How could the AI evaluate and respond to the student’s changing understanding, and what additional resources could be integrated into the learning experience to provide a comprehensive overview of the solar system?]
-[Evaluation: Role: Excellent 17/20, Action: Excellent 18/20, Context: Excellent 17/20, Expectation: Excellent 18/20, Overall Cohesion and Clarity: Excellent: 18/20, Total score: 88/100]                             
+[Evaluation: Role: Excellent 17/20, Action: Excellent 18/20, Context: Excellent 17/20, Expectation: Excellent 18/20, Overall Cohesion and Clarity: Excellent: 18/20, Total score: 88/100]
+[Feedback: Correct. Excellent effort in crafting your prompt! The response effectively delineates the role of the AI as a guide for Alex, showing a sophisticated understanding of how the AI can facilitate learning. Your action steps are well-defined, presenting the complex subject of the solar system in an engaging and simplified manner appropriate for a high school student's level. The educational context is carefully considered, maintaining the focus on beginner-friendly content while fostering an interest in astronomy. The expectations are thoughtfully set to make the learning process interactive and enjoyable, indicating a deep self-awareness of the student's educational needs. The clarity and cohesion with which you've constructed this prompt reflect a disciplined approach, demonstrating an understanding of both the learner's perspective and the educational goals. To further challenge your creativity and depth of detail, consider exploring how you might incorporate adaptive learning techniques to tailor the information to Alex’s progress. How could the AI evaluate and respond to the student’s changing understanding, and what additional resources could be integrated into the learning experience to provide a comprehensive overview of the solar system?]                             
 """},
-                {"role": "user", "content": "Question: " + user_input},
-                {"role": "user", "content": "Response: " + previous_response}
+                {"role": "user", "content": "Question: " + question_input},
+                {"role": "user", "content": "Response: " + user_response}
             ],
             stream=True
         )

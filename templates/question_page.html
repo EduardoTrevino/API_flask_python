@@ -24,34 +24,44 @@ body {
     padding-top: 20px; /* Adjust as needed for spacing from the top */
 }
 
+.centered-content {
+    margin: 0 auto;
+    width: 70%; /* Adjust to your preference */
+    background-color: #1C1C1E;
+    color: white;
+    font-size: 24px; /* Increased font size */
+    font-family: Helvetica, Arial, sans-serif; /* Changed font to Helvetica */
+    text-align: left; /* Text aligned to left */
+    padding: 10px;
+}
+
 .input-box-wrapper {
     position: relative;
     width: 70%; /* Adjust width as needed */
-    margin-left: 15%; /* Adjust to move off-center left */
-    margin-right: 15%; /* Adjust to move off-center right */
+    margin: 0 auto;
 }
 
 .input-box {
     width: 100%;
-    padding-left: 10px;
+    padding: 10px;
     margin-top: 20px;
     font-size: 24px;
-    color: white;
     background-color: transparent;
     outline: none;
     border: none;
-    padding-right: 50px;
-    resize: none;
-    border-bottom: 1px solid white;
-    /* lets make it a bit prettier */
-    /* border-radius: 5px;
-    transition: border-bottom 0.3s; */
-    /* lets add a little animation */
-    /* transition-timing-function: ease-in-out; */
+    border-bottom: 1px solid transparent; /* Makes bottom border transparent */
+    color: white;
+    caret-color: white;
+    resize: none; /* Prevents resizing */
+}
+
+.input-box::placeholder {
+    color: #565869; /* Style the placeholder text */
 }
 
 .input-box:focus {
     outline: none; /* Remove the default focus outline */
+    border-bottom: 1px solid transparent; /* Keeps bottom border transparent on focus */
 }
 
 .input-box:hover {
@@ -60,16 +70,6 @@ body {
 
 .question-label {
     font-size: 24px;
-}
-
-/* Style for the placeholder where streamed text will appear */
-#streamedText {
-    margin-top: 20px; /* Adjust as needed */
-    padding: 10px; /* Adjust as needed */
-    background-color: #1C1C1E; /* Adjust color as needed */
-    color: #ffff; /* Adjust text color as needed */
-    font-size: 24px; /* Adjust font size as needed */
-    text-align: left; /* Adjust text alignment as needed */
 }
 
 /* Styles for the circular button */
@@ -95,14 +95,14 @@ body {
 <body>
     <div class="container">
         <label for="questionInput" class="question-label">Question 1</label>
-        <div id="responseBox"></div>
+        <div id="responseBox" class="centered-content"></div>
         <div class="input-box-wrapper">
-            <textarea id="questionInput" class="input-box" rows="2"></textarea> <!-- Changed to textarea -->
+            <textarea id="questionInput" class="input-box" rows="2" placeholder="Craft your prompt critically... You are hard-working, and you got this!!"></textarea> <!-- Placeholder added -->
             <button id="submitButton" class="submitButton" onclick="sendUserResponse()">
                 <i class="fas fa-arrow-up"></i> <!-- Font Awesome icon -->
             </button>
         </div>
-        <div id="streamedResponse"></div> <!-- New label/div for streamed response -->
+        <div id="streamedResponse" class="centered-content"></div> <!-- New label/div for streamed response -->
     </div>
 </body>
 <script>
@@ -113,25 +113,11 @@ body {
         const submitButton = document.getElementById('submitButton');
         const streamedResponse = document.getElementById('streamedResponse');
 
-        const userText = questionInput.value;
+        const questionText = questionInput.value;
         const responseText = responseBox.textContent; // Get text from responseBox
-
-        // streamedResponse.innerHTML = 'Button clicked!';
 
         // Make the button disappear
         submitButton.style.display = 'none';
-
-        // Send the user's text and the previous response to the backend
-    //     const response = await fetch('/store-front-end-data', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ userInput: userText, previousResponse: responseText })
-    //     });
-
-    //     streamRealTimeFeedback();
-    // }
         try {
             // Send the user's text and the previous response to the backend
             const response = await fetch('/store-front-end-data', {
@@ -139,7 +125,7 @@ body {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ userInput: userText, previousResponse: responseText })
+                body: JSON.stringify({ questionInput: questionText, userResponse: responseText })
             });
 
             if (!response.ok) {
