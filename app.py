@@ -57,7 +57,7 @@ def send_llm_feedback_and_eval():
     user_response = session.get('previousResponse', 'No previous response found')
 
     # Log the retrieved session data
-    logging.info(f"Retrieved from session: UserInput: {question_input}, PreviousResponse: {previous_response}")
+    logging.info(f"Retrieved from session: UserInput: {question_input}, PreviousResponse: {user_response}")
 
     return llm_for_feedback_and_eval(question_input, user_response)
 
