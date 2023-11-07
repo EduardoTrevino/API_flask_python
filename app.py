@@ -42,11 +42,11 @@ def home():
 @app.route('/store-front-end-data', methods=['POST'])
 def store_front_end_data():
     data = request.json
-    session['userInput'] = data['userInput']
-    session['previousResponse'] = data['previousResponse']
+    session['questionInput'] = data['questionInput']
+    session['userResponse'] = data['userResponse']
 
     # Log the received data
-    logging.info(f"Stored in session: UserInput: {session['userInput']}, PreviousResponse: {session['previousResponse']}")
+    logging.info(f"Stored in session: QuestionInput: {session['questionInput']}, UserResponse: {session['userResponse']}")
 
     return jsonify({'message': 'Data stored in session successfully'})
 
