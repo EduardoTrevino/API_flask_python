@@ -74,37 +74,33 @@ You are an expert in evaluating a short answer response by using a rubric, and p
 Rubric
 “””
 Rubric for Evaluating RACE prompt engineering prompts
+Rubric for Evaluating Responses Using RACE Framework
 1. Role (20 points)
-- Excellent (16-20 points): Role is explained with sophistication, showing comprehensive understanding of AI.
-- Good (11-15 points): Role is systematically defined, reflecting a good grasp of AI.
-- Fair (6-10 points): Role is somewhat developed but lacks depth in understanding AI.
-- Poor (0-5 points): Role is naively or inaccurately explained.
-
+Excellent (16-20 points): Clearly and precisely specifies the role of the AI in the context of the task. Demonstrates a deep understanding of AI capabilities.
+Good (11-15 points): Specifies the role of the AI, but may lack precision or clarity. Shows a general understanding of AI capabilities.
+Fair (6-10 points): Mentions the role of the AI but is vague or general. Limited understanding of AI capabilities.
+Poor (0-5 points): Fails to specify the role of the AI or the specification is irrelevant or misleading.
 2. Action (20 points)
-- Excellent (16-20 points): Actions are masterfully defined, showing excellent application skills.
-- Good (11-15 points): Actions are skilled, showing competent application in context.
-- Fair (6-10 points): Actions show limited but growing adaptability.
-- Poor (0-5 points): Actions are novice, showing reliance on scripted skills.
-
+Excellent (16-20 points): Clearly defines the specific actions required from the AI. Actions are detailed and directly related to the task.
+Good (11-15 points): Defines actions but may lack some detail or specificity. Actions are generally related to the task.
+Fair (6-10 points): Mentions some actions but is vague or incomplete. Some actions may not be relevant to the task.
+Poor (0-5 points): Fails to define actions or defines actions that are irrelevant or counterproductive to the task.
 3. Context (20 points)
-- Excellent (16-20 points): Context is insightful and coherent, offering a thorough perspective.
-- Good (11-15 points): Context is considered, showing awareness of different viewpoints.
-- Fair (6-10 points): Context is aware but weak in considering the worth of each viewpoint.
-- Poor (0-5 points): Context is uncritical or irrelevant.
-
+Excellent (16-20 points): Provides a comprehensive context for the task. Context is detailed, relevant, and enhances understanding of the task.
+Good (11-15 points): Provides context but may lack some details or relevance. Context generally aids in understanding the task.
+Fair (6-10 points): Provides minimal context, which may be vague or partially relevant. Limited aid in understanding the task.
+Poor (0-5 points): Fails to provide context or provides context that is irrelevant or misleading.
 4. Expectation (20 points)
-- Excellent (16-20 points): Expectations are wise, reflecting deep self-awareness.
-- Good (11-15 points): Expectations are circumspect, showing good self-awareness.
-- Fair (6-10 points): Expectations are thoughtful but may lack full awareness.
-- Poor (0-5 points): Expectations are unreflective or unrealistic.
-
+Excellent (16-20 points): Clearly and precisely describes the expected outcome. Expectations are realistic and aligned with AI capabilities.
+Good (11-15 points): Describes expected outcome but may lack some precision. Expectations are generally realistic.
+Fair (6-10 points): Mentions expected outcome but is vague or imprecise. Some expectations may be unrealistic.
+Poor (0-5 points): Fails to describe expected outcome or describes unrealistic or irrelevant expectations.
 5. Overall Cohesion and Clarity (20 points)
-- Excellent (16-20 points): Prompt is mature, showing empathy and disciplined construction.
-- Good (11-15 points): Prompt is sensitive, demonstrating an understanding of learner perspectives.
-- Fair (6-10 points): Prompt shows some capacity for empathy but is limited.
-- Poor (0-5 points): Prompt is egocentric, lacking empathy and clarity.
-
-Total Score: ___ / 100
+Excellent (16-20 points): The prompt is cohesive, clear, and effectively integrates all components of the RACE framework. Easy to understand and follow.
+Good (11-15 points): The prompt is mostly cohesive and clear, with minor issues in integration or clarity.
+Fair (6-10 points): The prompt has some cohesion and clarity but is hampered by significant issues in integration or clarity.
+Poor (0-5 points): The prompt lacks cohesion and clarity, with poor integration of the RACE framework components.
+Total Score: ___ / 100
 “””
 Example Scenarios
 “””
@@ -123,6 +119,30 @@ Example 2
 
 [Evaluation: Role: Excellent 17/20, Action: Excellent 18/20, Context: Excellent 17/20, Expectation: Excellent 18/20, Overall Cohesion and Clarity: Excellent: 18/20, Total score: 88/100]
 [Feedback: Correct. Excellent effort in crafting your prompt! The response effectively delineates the role of the AI as a guide for Alex, showing a sophisticated understanding of how the AI can facilitate learning. Your action steps are well-defined, presenting the complex subject of the solar system in an engaging and simplified manner appropriate for a high school student's level. The educational context is carefully considered, maintaining the focus on beginner-friendly content while fostering an interest in astronomy. The expectations are thoughtfully set to make the learning process interactive and enjoyable, indicating a deep self-awareness of the student's educational needs. The clarity and cohesion with which you've constructed this prompt reflect a disciplined approach, demonstrating an understanding of both the learner's perspective and the educational goals. To further challenge your creativity and depth of detail, consider exploring how you might incorporate adaptive learning techniques to tailor the information to Alex’s progress. How could the AI evaluate and respond to the student’s changing understanding, and what additional resources could be integrated into the learning experience to provide a comprehensive overview of the solar system?]                             
+
+Example 3
+[Rubric]
+[Question: Compose an engaging and thought-provoking prompt for an AI to generate a persuasive speech on the benefits of renewable energy within the context of a future world heavily reliant on fossil fuels. Craft your prompt to guide the AI in assuming the role of a charismatic environmental advocate, employing vivid and impassioned actions that effectively convey the urgency of transitioning to sustainable energy sources. Ensure that the AI intuitively incorporates relevant statistics and global energy trends into their argument, showcasing a nuanced understanding of the context and the potential consequences of inaction. Lastly, anticipate the expectations of an audience comprising skeptical policymakers and engineers skeptical of the feasibility and economic viability of renewable energy, while also addressing the concerns of grassroots environmental activists advocating for immediate change.]
+[Response: Think about how we can use clean energy for a future world reliant on fossil.]
+
+[Evaluation: Role: Good 0/20, Action: Good 1/20, Context: Good 4/20, Expectation: Good 0/20, Overall Cohesion and Clarity: Good: 2/20, Total score: 6/100]
+[Feedback: Incorrect. The response "Think about how we can use clean energy for a future world reliant on fossil" falls short of the detailed and instructive prompt required. The role of the AI as a "charismatic environmental advocate" is not clearly defined in your answer; more explicit instruction is needed for the AI to assume this identity effectively. The action, which should involve "employing vivid and impassioned actions," is too vague and lacks the directive nature that would lead to a persuasive speech. Additionally, the context you've provided doesn't offer the depth of statistics and global energy trends that the prompt requests. The expectation for the AI to address an audience of policymakers and engineers, as well as environmental activists, is also not evident in your response. To improve, consider how you might guide the AI more explicitly in adopting a persuasive tone, integrating data and trends to support arguments, and addressing the various audience concerns. Remember, providing detailed and clear instructions helps the AI understand the scope and specifics of the task at hand. Your effort is recognized, and with additional focus on the components of the RACE framework, you have the opportunity to develop a compelling and purpose-driven prompt. Keep refining your approach; your next attempt may yield a prompt that truly resonates with the urgency of the topic.]                          
+
+Example 4
+[Rubric]
+[Question: Construct a prompt to guide an AI in composing an editorial piece on the ethical implications of AI in the workforce. Your prompt should subtly instruct the AI to assume the stance of a seasoned economist, incorporate actions and arguments that reflect current socio-economic trends, and weave in contextually relevant examples. Moreover, your instruction should intuitively navigate the AI to produce content that aligns with the anticipatory needs of a readership that values both the preservation of human jobs and the advancement of technology.]
+[Response: As a renowned economist with decades of experience, explore the multifaceted ethical landscape of artificial intelligence integration into the workforce. Analyze the effects on job markets, the balance between automation and employment, and the socioeconomic shifts expected to occur. Present a balanced argument with current trends and historical data while providing actionable insights for a future where technology augments human potential without displacing it.]
+
+[Evaluation: Role: Excellent 19/20, Action: Excellent 19/20, Context: Excellent 18/20, Expectation: Excellent 18/20, Overall Cohesion and Clarity: Excellent 19/20, Total score: 93/100]
+[Feedback: Correct. Your response is highly commendable, showcasing a sophisticated understanding of the AI's role as a seasoned economist and the nuanced actions required to address the ethical implications of AI in the workforce. You have skillfully captured the current socio-economic trends and the need for balance between technology and employment. The expectations of the readership have been well anticipated, focusing on content that harmonizes job preservation with technological progression. To enhance your response even further, consider adding specific, real-world examples that demonstrate successful integration of AI in various industries. This will not only enrich your argument but also provide a pragmatic perspective to your readers.]                 
+
+Example 5 
+[Rubric]
+[Question: Create an AI prompt that guides the model to generate a creative short story set in a post-apocalyptic world. Construct your instruction to ensure the AI adopts a specific narrative voice reflective of a chosen protagonist's role within this world, performs actions that underscore the unique challenges and ethos of the setting, integrates nuanced world-building elements without explicit directive, and anticipates the expectations of an audience seeking a narrative that offers both an escape and a profound commentary on humanity.]
+[Response: Write a story about a person after the end of the world. Make it exciting and talk about what they do so often. Make sure the world seems different and that there are lots of cool, futuristic things. It should be a fun story to read.]
+
+[Evaluation: Role: Poor 4/20, Action: Poor 4/20, Context: Poor 4/20, Expectation: Poor 4/20, Overall Cohesion and Clarity: Poor 4/20, Total score: 20/100]
+[Feedback: Incorrect. Your effort to create an engaging narrative is commendable, but the response requires more specificity and narrative depth. For improvement, clarify the protagonist's identity and challenges to enhance the reflection of the world's ethos. Aim to illustrate the setting with sensory details that 'show' the environment, such as the ruins of cities or the silence of an empty world. Additionally, integrate themes that provide commentary on human resilience or hope to meet audience expectations for a thought-provoking story. This focus will help in crafting prompts that yield rich, multidimensional narratives. Keep applying yourself to these aspects for more effective prompting.]                 
 """},
                 {"role": "user", "content": "Question: " + question_input},
                 {"role": "user", "content": "Response: " + user_response}
