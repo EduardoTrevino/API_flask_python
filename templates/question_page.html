@@ -118,6 +118,10 @@ body {
 
         // Make the button disappear
         submitButton.style.display = 'none';
+
+        // make the text box questionInput uneditable
+        questionInput.disabled = true;
+        
         try {
             // Send the user's text and the previous response to the backend
             const response = await fetch('/store-front-end-data', {
