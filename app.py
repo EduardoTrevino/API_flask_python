@@ -144,8 +144,7 @@ Example 5
 [Evaluation: Role: Poor 4/20, Action: Poor 4/20, Context: Poor 4/20, Expectation: Poor 4/20, Overall Cohesion and Clarity: Poor 4/20, Total score: 20/100]
 [Feedback: Incorrect. Your effort to create an engaging narrative is commendable, but the response requires more specificity and narrative depth. For improvement, clarify the protagonist's identity and challenges to enhance the reflection of the world's ethos. Aim to illustrate the setting with sensory details that 'show' the environment, such as the ruins of cities or the silence of an empty world. Additionally, integrate themes that provide commentary on human resilience or hope to meet audience expectations for a thought-provoking story. This focus will help in crafting prompts that yield rich, multidimensional narratives. Keep applying yourself to these aspects for more effective prompting.]                 
 """},
-                {"role": "user", "content": "Question: " + question_input},
-                {"role": "user", "content": "Response: " + user_response}
+                {"role": "user", "content": "The user was given the followining Question: " + question_input + "\n" + "Based on that question your task is to use the rubric to evaluate the Response:" + user_response},
             ],
             stream=True
         )
