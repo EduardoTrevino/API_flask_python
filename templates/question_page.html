@@ -174,6 +174,13 @@ body {
                     break;  // Break out of the loop as we have reached the end of the stream
                 }
 
+                // Processing the streamed message
+                streamedMessage = streamedMessage.replace(/\[|\]/g, ''); // Remove brackets
+                streamedMessage = streamedMessage.replace(/\] \[/g, '<br>'); // New line after evaluations
+
+                // Color the word 'Correct' in green and 'Incorrect' in red
+                streamedMessage = streamedMessage.replace(/Correct/g, '<span style="color: green;">Correct</span>');
+                streamedMessage = streamedMessage.replace(/Incorrect/g, '<span style="color: red;">Incorrect</span>');
                 streamedResponseBox.innerHTML = `<div> ${streamedMessage}</div>`;
             }
         } catch (error) {
