@@ -177,7 +177,10 @@ body {
                 // Processing the streamed message
                 streamedMessage = streamedMessage.replace(/\[|\]/g, ''); // Remove brackets
                 streamedMessage = streamedMessage.replace(/\] \[/g, '<br>'); // New line after evaluations
-                streamedMessage = streamedMessage.replace(/Feedback:/g, '<br>Feedback:');
+                // Lets do the feedback breakline only once (as it is repeated)
+                for (let i = 0; i < 2; i++) {
+                    streamedMessage = streamedMessage.replace(/Feedback:/g, '<br>Feedback:');
+                }
 
                 // Color the word 'Correct' in green and 'Incorrect' in red
                 streamedMessage = streamedMessage.replace(/Correct/g, '<span style="color: green;">Correct</span>');
