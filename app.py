@@ -136,15 +136,9 @@ Example 4
 [Evaluation: Role: Excellent 19/20, Action: Excellent 19/20, Context: Excellent 18/20, Expectation: Excellent 18/20, Overall Cohesion and Clarity: Excellent 19/20, Total score: 93/100]
 [Feedback: Correct. Your response is highly commendable, showcasing a sophisticated understanding of the AI's role as a seasoned economist and the nuanced actions required to address the ethical implications of AI in the workforce. You have skillfully captured the current socio-economic trends and the need for balance between technology and employment. The expectations of the readership have been well anticipated, focusing on content that harmonizes job preservation with technological progression. To enhance your response even further, consider adding specific, real-world examples that demonstrate successful integration of AI in various industries. This will not only enrich your argument but also provide a pragmatic perspective to your readers.]                 
 
-Example 5 
-[Rubric]
-[Question: Create an AI prompt that guides the model to generate a creative short story set in a post-apocalyptic world. Construct your instruction to ensure the AI adopts a specific narrative voice reflective of a chosen protagonist's role within this world, performs actions that underscore the unique challenges and ethos of the setting, integrates nuanced world-building elements without explicit directive, and anticipates the expectations of an audience seeking a narrative that offers both an escape and a profound commentary on humanity.]
-[Response: Write a story about a person after the end of the world. Make it exciting and talk about what they do so often. Make sure the world seems different and that there are lots of cool, futuristic things. It should be a fun story to read.]
-
-[Evaluation: Role: Poor 4/20, Action: Poor 4/20, Context: Poor 4/20, Expectation: Poor 4/20, Overall Cohesion and Clarity: Poor 4/20, Total score: 20/100]
-[Feedback: Incorrect. Your effort to create an engaging narrative is commendable, but the response requires more specificity and narrative depth. For improvement, clarify the protagonist's identity and challenges to enhance the reflection of the world's ethos. Aim to illustrate the setting with sensory details that 'show' the environment, such as the ruins of cities or the silence of an empty world. Additionally, integrate themes that provide commentary on human resilience or hope to meet audience expectations for a thought-provoking story. This focus will help in crafting prompts that yield rich, multidimensional narratives. Keep applying yourself to these aspects for more effective prompting.]                 
-"""},
-                {"role": "user", "content": "The user was given the followining Question: " + question_input + "\n" + "Based on that question your task is to use the rubric to evaluate the Response:" + user_response},
+end of examples
+                 """},
+                {"role": "user", "content": "[Rubric]\n[Question: " + question_input + "]\n" + "[Response:" + user_response + "]"},
             ],
             stream=True
         )
