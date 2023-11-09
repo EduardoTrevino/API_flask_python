@@ -151,6 +151,7 @@ body {
     // Function to stream the real-time feedback from the backend
     async function streamRealTimeFeedback() {
         const streamedResponseBox = document.getElementById('streamedResponse');
+        let feedbackProcessed = false; // Flag to indicate if feedback section has been processed
 
         try {
             const response = await fetch('/send-llm-feedback-and-eval', {
@@ -177,7 +178,7 @@ body {
                 // Processing the streamed message
                 streamedMessage = streamedMessage.replace(/\[|\]/g, ''); // Remove brackets
                 streamedMessage = streamedMessage.replace(/\] \[/g, '<br>'); // New line after evaluations
-                
+
                 if (!feedbackProcessed && /Feedback:/.test(streamedMessage)) {
                     streamedMessage = streamedMessage.replace(/Feedback:/, '<br>Feedback:');
                     feedbackProcessed = true; // Update flag after processing "Feedback:"
