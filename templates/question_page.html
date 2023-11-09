@@ -180,7 +180,7 @@ body {
                 streamedMessage = streamedMessage.replace(/\] \[/g, '<br>'); // New line after evaluations
 
                 if (!feedbackProcessed && /Feedback:/.test(streamedMessage)) {
-                    streamedMessage = streamedMessage.replace(/Feedback:/, '<br>Feedback:');
+                    streamedMessage = streamedMessage.replace(/Feedback:/, '<br><br>Feedback:');
                     feedbackProcessed = true; // Update flag after processing "Feedback:"
                 }
 
