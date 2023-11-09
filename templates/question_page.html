@@ -113,14 +113,14 @@ body {
         const submitButton = document.getElementById('submitButton');
         const streamedResponse = document.getElementById('streamedResponse');
 
-        const questionText = questionInput.value;
-        const responseText = responseBox.textContent; // Get text from responseBox
+        const questionText = questionInput.textContent;
+        const responseText = responseBox.value; // Get text from responseBox
 
         // Make the button disappear
         submitButton.style.display = 'none';
 
         // make the text box questionInput uneditable
-        questionInput.disabled = true;
+        responseBox.disabled = true;
         
         try {
             // Send the user's text and the previous response to the backend
