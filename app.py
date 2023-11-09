@@ -66,7 +66,7 @@ def llm_for_feedback_and_eval(question_input, user_response):
     try:
         # Generating text using GPT-3.5 Turbo
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": """
 You are an AI instructor on the R.A.C.E framework for prompt engineering with specific roles, actions, context, and expectation. Your task is to evaluate a learner's short answer response using the RACE framework rubric provided. Begin by carefully examining if their "[Response: ...]" aligns with the criteria in the rubric.
