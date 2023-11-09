@@ -196,7 +196,7 @@ body {
     }
     // Function to handle the streaming of text from the LLM
     async function streamLLMResponse() {
-        const responseBox = document.getElementById('responseBox');
+        const questionInput = document.getElementById('questionInput');
 
         try {
             const response = await fetch('/get-response-from-session', {
@@ -220,11 +220,11 @@ body {
                     break;  // Break out of the loop as we have reached the end of the stream
                 }
 
-                responseBox.innerHTML = `<div> ${assistantMessage}</div>`;
+                questionInput.innerHTML = `<div> ${assistantMessage}</div>`;
             }
         } catch (error) {
             console.error('There has been a problem with your fetch operation:', error);
-            responseBox.innerHTML += `<div style="color: red;">Error: ${error}</div>`;
+            questionInput.innerHTML += `<div style="color: red;">Error: ${error}</div>`;
         }
     }
 
@@ -232,7 +232,7 @@ body {
     streamLLMResponse();
     // Additional script for auto-resizing the textarea
     document.addEventListener('DOMContentLoaded', function() {
-    const textarea = document.getElementById('questionInput');
+    const textarea = document.getElementById('responseBox');
     textarea.addEventListener('input', autoResize, false);
 
     function autoResize() {
