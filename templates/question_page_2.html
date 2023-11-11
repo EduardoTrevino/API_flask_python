@@ -245,7 +245,7 @@ body {
 
     // Function to send the feedback to the backend and redirect to the next page
     async function sendFeedbackAndRedirect() {
-        const feedbackandeval = document.getElementById('streamedResponse').innerHTML;
+        const feedbackandeval = document.getElementById('streamedResponse').textContent;
 
         try {
             // Send the feedback to the backend
