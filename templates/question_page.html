@@ -236,6 +236,15 @@ body {
         arrowButton.style.position = "absolute";
         arrowButton.style.right = "10px";
         arrowButton.style.bottom = "10px";
+        // Background transparent and color white
+        arrowButton.style.backgroundColor = "transparent";
+        arrowButton.style.color = "white";
+        // lets move the arrow to be directly below the streamed response
+        arrowButton.style.marginTop = "20px";
+        arrowButton.style.border = "none";
+        arrowButton.style.fontSize = "24px";
+        arrowButton.style.cursor = "pointer";
+        arrowButton.style.zIndex = "2";
         document.getElementById("streamedResponse").appendChild(arrowButton);
 
         arrowButton.addEventListener("click", function() {
@@ -245,7 +254,7 @@ body {
 
     // Function to send the feedback to the backend and redirect to the next page
     async function sendFeedbackAndRedirect() {
-        const feedbackandeval = document.getElementById('streamedResponse').innerHTML;
+        const feedbackandeval = document.getElementById('streamedResponse').textContent;
 
         try {
             // Send the feedback to the backend
