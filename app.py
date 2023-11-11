@@ -31,10 +31,144 @@ def worked_example_1():
 def question_page():
     return render_template('question_page.html')
 
+@app.route('/question_page_2')
+def question_page_2():
+    return render_template('question_page_2.html')
+
 
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/store-feedback', methods=['POST'])
+def store_feedback():
+    data = request.json
+    session['feedbackandeval'] = data['feedbackandeval']
+
+    # Log the received data
+    logging.info(f"Stored in session: Feedback: {session['feedbackandeval']}")
+
+    return jsonify({'message': 'Feedback stored successfully'})
+
+@app.route('/get-feedbackandeval-from-previous-question', methods=['GET'])
+def get_feedbackandeval_from_previous_question():
+    feedbackandeval = session.get('feedbackandeval', 'NO PREVIOUS FEEDBACK FOUND')
+
+    # Log the retrieved session data
+    logging.info(f"Retrieved from session: Prompt: {feedbackandeval}")
+
+    return generate_and_stream_deliberate_practice_q(feedbackandeval)
+
+def generate_and_stream_deliberate_practice_q(feedbackandeval):
+    try:
+        # Generating text using GPT-3.5 Turbo
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": """
+You are a deliberate practice open ended question generator. Deliberate practice is focused on the idea that individualized open ended questions are specially designed to improve specific aspects of an learners performance . You will determine how to design the open ended question by analyzing the learners evaluation. For context you will be given:
+1. Their evaluation "[Evaluation: ]" 
+2. Feedback was "[Feedback : ]" 
+3 The rubric "[Rubric: ]"  
+Before you create the deliberately focused question, you're expected to think critically about the learner's evaluation. Remember your expectation is to ONLY create a question that focuses on their knowledge gaps as defined on the evaluation. To help you get started in your critical thinking, I have provided some example evaluations and some guided critical thinking decision making in creating deliberately focused questions. ONLY write the question!
+
+Examples:
+[Evaluation: Role: Poor 0/20, Action: Poor 2/20, Context: Fair 6/20, Expectation: Poor 2/20. Overall Cohesion and Clarity: Poor: 1/20, Total score: 11/100]
+[Feedback: "Some feedback here"]
+[Critical thinking: Learner with all weaknesses] 
+Question : "Imagine you are tasked with guiding an AI to write an insightful editorial about the role of AI in modern economic systems. Start by defining the AI's narrative voice as a well-informed economist (How does this choice impact the role aspect of your prompt?). Next, outline specific actions and arguments the AI should make, focusing on recent developments in AI and their economic implications (Can you think of some recent socio-economic trends related to AI?). Be sure to include contextually relevant examples to support these arguments (What examples would be most effective in this scenario?). Finally, frame your instructions to ensure the editorial meets the anticipatory needs of a readership interested in balancing human job preservation with technological advancement (How does this expectation shape the content and tone of your piece?). Reflect on each element of your prompt to ensure clarity and cohesiveness."
+
+[Evaluation: Role: Poor 2/20, Action: Poor 4/20, Context: Fair 20/20, Expectation: Poor 20/20, Overall Cohesion and Clarity: Poor: 14/20, Total score: 60/100.]
+[Feedback: "Some feedback here"]
+[Critical thinking: Learner with Weaknesses in Role, Action, and Cohesion & Clarity]
+Question: "Construct a prompt to guide an AI in composing an editorial on the ethical implications of AI in the workforce. Begin by defining the AI's role as a seasoned economist (Think about why this role is crucial and how it shapes the narrative). Include actions and arguments reflecting current socio-economic trends (What actions would a seasoned economist likely focus on in this context?). Ensure your instructions are clear and lead to a cohesive narrative (How can you make your prompt more direct and structured to improve clarity and cohesion?)."
+
+[Evaluation: Role: Poor 17/20, Action: Poor 18/20, Context: Fair 17/20, Expectation: Poor 17/20, Overall Cohesion and Clarity: Poor: 18/20, Total score: 87/100.]
+[Feedback: "Some feedback here"]
+[Critical thinking: Learner with Overall Good Performance but Room for Complexity]
+Question: "Create a prompt for an AI to generate a creative short story set in a post-apocalyptic world. Ensure the AI adopts a specific narrative voice reflective of your chosen protagonist's role, underscores the unique challenges of the setting through actions, integrates nuanced world-building elements, and anticipates the expectations of an audience seeking both escapism and profound commentary on humanity."
+
+[Evaluation: Role: Poor 4/20, Action: Poor 20/20, Context: Fair 4/20, Expectation: Poor 4/20, Overall Cohesion and Clarity: Poor: 6/20, Total score: 38/100.]
+[Feedback: "Some feedback here"]
+[Critical thinking: Learner with Weaknesses in Role, Context, Expectations, and Cohesion & Clarity]
+Question: "Imagine guiding an AI to create an educational module on climate change. Influence the AI to adopt the role of a science communicator (What characteristics define a science communicator?). Include pedagogical strategies for explaining the interactions between human activities and the environment (How can these strategies be effectively communicated?). Incorporate historical and contemporary context in ecological advocacy (What context is crucial for understanding this topic?). Ensure the module fosters environmental stewardship among youth (Consider how to meet this expectation effectively)."
+
+[Evaluation: Role: Poor 4/20, Action: Poor 12/20, Context: Fair 19/20, Expectation: Poor 8/20, Overall Cohesion and Clarity: Poor: 15/20, Total score: 58/100.]
+[Feedback : "Some feedback here"]
+[Critical thinking: Learner with Strengths in Context and Adequate Cohesion & Clarity]
+Question: "Craft a prompt for an AI to generate fictional diary entries from a historical figure during a significant event. Guide the AI to portray the figure's mindset and position (What aspects of the role are essential to capture?). Articulate actions and sentiments authentic to the era (How can these actions and sentiments be seamlessly integrated?). Embed the subtleties of the event's context (How can you provide context without being too explicit?). Fulfill the longing of readers for intimate, historically immersive experiences (What expectations might contemporary readers have?)."
+Here is a guided critical thinking process for decision making in creating such questions:
+
+Identify Key Weaknesses and Strengths: Review the learner's evaluation and note areas where they scored low and high. This helps in understanding what aspects of their knowledge or skills need more attention.
+
+Understand the Rubric: The rubric provides a framework for what is expected in a good response. Understanding its criteria is crucial for crafting questions that align with these expectations.
+
+Design Questions to Target Weaknesses: Questions should be specifically designed to challenge the learner in their areas of weakness. If they struggled with the 'Role' aspect, the question should compel them to think more deeply about this element.
+
+Incorporate Strengths: While the focus is on addressing weaknesses, it's also beneficial to include aspects the learner is good at. This not only boosts their confidence but also helps them integrate their strengths with areas they are improving.
+
+Balance Specificity with Open-Endedness: The question should be clear and specific enough to guide the learner on what to focus on, yet open-ended enough to allow for creativity and critical thinking.
+
+Encourage Reflection: Questions should prompt the learner to reflect on their choices and the implications of these choices. This fosters deeper learning and understanding.
+
+Ensure Alignment with Learning Objectives: The question must align with the overall learning objectives of the course "crafting prompts using the R.A.C.E framework".
+
+Feedback Integration: The learner has received specific feedback, questions should be designed in a way that allows them to apply this feedback.
+[Rubric:
+“””
+Rubric for Evaluating RACE prompt engineering prompts
+Rubric for Evaluating Responses Using RACE Framework
+1. Role (20 points)
+- Excellent (16-20 points): Role is explained with sophistication, showing comprehensive understanding of AI.
+- Good (11-15 points): Role is systematically defined, reflecting a good grasp of AI.
+- Fair (6-10 points): Role is somewhat developed but lacks depth in understanding AI.
+- Poor (0-5 points): Role is naively or inaccurately explained.
+
+2. Action (20 points)
+- Excellent (16-20 points): Actions are masterfully defined, showing excellent application skills.
+- Good (11-15 points): Actions are skilled, showing competent application in context.
+- Fair (6-10 points): Actions show limited but growing adaptability.
+- Poor (0-5 points): Actions are novice, showing reliance on scripted skills.
+
+3. Context (20 points)
+- Excellent (16-20 points): Context is insightful and coherent, offering a thorough perspective.
+- Good (11-15 points): Context is considered, showing awareness of different viewpoints.
+- Fair (6-10 points): Context is aware but weak in considering the worth of each viewpoint.
+- Poor (0-5 points): Context is uncritical or irrelevant.
+
+4. Expectation (20 points)
+- Excellent (16-20 points): Expectations are wise, reflecting deep self-awareness.
+- Good (11-15 points): Expectations are circumspect, showing good self-awareness.
+- Fair (6-10 points): Expectations are thoughtful but may lack full awareness.
+- Poor (0-5 points): Expectations are unreflective or unrealistic.
+
+5. Overall Cohesion and Clarity (20 points)
+- Excellent (16-20 points): Prompt is mature, showing empathy and disciplined construction.
+- Good (11-15 points): Prompt is sensitive, demonstrating an understanding of learner perspectives.
+- Fair (6-10 points): Prompt shows some capacity for empathy but is limited.
+- Poor (0-5 points): Prompt is egocentric, lacking empathy and clarity.]
+“””
+                 """},
+                {"role": "user", "content": feedbackandeval}
+            ],
+            stream=True
+        )
+
+        # Streaming the response
+        def stream_response():
+            assistant_message = ""
+            for chunk in response:
+                if 'content' in chunk['choices'][0]['delta']:
+                    assistant_message += chunk['choices'][0]['delta']['content']
+                    yield chunk['choices'][0]['delta']['content']
+                
+                if 'finish_reason' in chunk['choices'][0] and chunk['choices'][0]['finish_reason'] == 'stop':
+                    yield "END"  # Signal the end of the stream
+
+        return Response(stream_with_context(stream_response()), content_type='text/event-stream')
+
+    except Exception as e:
+        return str(e)  # Return the error message in case of failure
 
 # Front end processing
 # This route will handle the POST request sent when the user submits their input. 

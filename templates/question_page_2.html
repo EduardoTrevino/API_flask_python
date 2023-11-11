@@ -94,7 +94,7 @@ body {
 </head>
 <body>
     <div class="container">
-        <label for="questionInput" class="question-label">Question 1</label>
+        <label for="questionInput" class="question-label">Question 2</label>
         <div id="questionInput" class="centered-content"></div>
         <div class="input-box-wrapper">
             <textarea id="responseBox" class="input-box" rows="1" placeholder="Write what you think here "></textarea> <!-- Placeholder added -->
@@ -111,7 +111,7 @@ body {
         const questionInput = document.getElementById('questionInput');
 
         try {
-            const response = await fetch('/get-response-from-session', {
+            const response = await fetch('/get-feedbackandeval-from-previous-question', {
                 method: 'GET'
             });
 
@@ -262,7 +262,7 @@ body {
             }
 
             // Redirect to the new HTML page
-            window.location.href = '/question_page_2'; // Next question page
+            window.location.href = '/question_page_3'; // Next question page
         } catch (error) {
             console.error('Fetch error:', error);
         }
