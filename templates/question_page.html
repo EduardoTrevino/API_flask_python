@@ -33,6 +33,22 @@ body {
     font-family: Helvetica, Arial, sans-serif; /* Changed font to Helvetica */
     text-align: left; /* Text aligned to left */
     padding: 10px;
+    position: relative;
+}
+.arrowButton {
+    display: inline-block; /* Aligns button with the text */
+    margin-top: 10px; /* Space from the text above */
+    margin-left: 10px; /* Space from the text on the left */
+    background-color: white;
+    color: #1C1C1E;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
 }
 
 .input-box-wrapper {
@@ -232,20 +248,8 @@ body {
     function appendArrowButton() {
         const arrowButton = document.createElement("button");
         arrowButton.innerHTML = "→";
-        arrowButton.id = "arrowButton";
-        arrowButton.style.position = "absolute";
-        arrowButton.style.right = "10px";
-        arrowButton.style.bottom = "10px";
-        // Background transparent and color white
-        arrowButton.style.backgroundColor = "transparent";
-        arrowButton.style.color = "white";
-        // lets move the arrow to be directly below the streamed response
-        arrowButton.style.marginTop = "20px";
-        arrowButton.style.border = "none";
-        arrowButton.style.fontSize = "24px";
-        arrowButton.style.cursor = "pointer";
-        arrowButton.style.zIndex = "2";
-        document.getElementById("streamedResponse").appendChild(arrowButton);
+        arrowButton.classList.add("arrowButton");
+        document.getElementById("streamedResponse").after(arrowButton);
 
         arrowButton.addEventListener("click", function() {
             sendFeedbackAndRedirect();
