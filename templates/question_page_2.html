@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Question Page</title>
+    <title>Question Page # 2</title>
     <style>
 body {
     font-family: Helvetica, Arial, sans-serif;
@@ -29,10 +29,26 @@ body {
     width: 70%; /* Adjust to your preference */
     background-color: #1C1C1E;
     color: white;
-    font-size: 24px; /* Increased font size */
+    font-size: 16px; /* Increased font size */
     font-family: Helvetica, Arial, sans-serif; /* Changed font to Helvetica */
     text-align: left; /* Text aligned to left */
     padding: 10px;
+    position: relative;
+}
+.arrowButton {
+    display: inline-block; /* Aligns button with the text */
+    margin-top: 10px; /* Space from the text above */
+    margin-left: 10px; /* Space from the text on the left */
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    text-align: right; /* this is where i last left off  Arrow was ugly havent pushed*/
+    line-height: 30px;
+    cursor: pointer;
 }
 
 .input-box-wrapper {
@@ -45,7 +61,7 @@ body {
     width: 100%;
     padding: 10px;
     margin-top: 20px;
-    font-size: 24px;
+    font-size: 16px;
     background-color: transparent;
     outline: none;
     border: none;
@@ -69,7 +85,7 @@ body {
 }
 
 .question-label {
-    font-size: 24px;
+    font-size: 16px;
 }
 
 /* Styles for the circular button */
@@ -232,11 +248,8 @@ body {
     function appendArrowButton() {
         const arrowButton = document.createElement("button");
         arrowButton.innerHTML = "→";
-        arrowButton.id = "arrowButton";
-        arrowButton.style.position = "absolute";
-        arrowButton.style.right = "10px";
-        arrowButton.style.bottom = "10px";
-        document.getElementById("streamedResponse").appendChild(arrowButton);
+        arrowButton.classList.add("arrowButton");
+        document.getElementById("streamedResponse").after(arrowButton);
 
         arrowButton.addEventListener("click", function() {
             sendFeedbackAndRedirect();
