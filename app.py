@@ -31,9 +31,17 @@ def worked_example_1():
 def question_page():
     return render_template('question_page.html')
 
+@app.route('/worked_example_2')
+def worked_example_2():
+    return render_template('worked_example_2.html')
+
 @app.route('/question_page_2')
 def question_page_2():
     return render_template('question_page_2.html')
+
+@app.route('/post_test')
+def post_test():
+    return render_template('post_test.html')
 
 
 @app.route('/')
