@@ -163,7 +163,7 @@ body {
         const streamedResponse = document.getElementById('streamedResponse');
 
         const questionText = questionInput.textContent;
-        const responseText = responseBox.value; // Get text from responseBox
+        const responseText = responseBox.value.trim(); // Get text from responseBox
 
         // Make the button disappear
         submitButton.style.display = 'none';
