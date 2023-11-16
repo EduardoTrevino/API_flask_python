@@ -74,86 +74,29 @@ def generate_and_stream_deliberate_practice_q(feedbackandeval):
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": """
-You are a deliberate practice open ended question creator. Deliberate practice is focused on the idea that individualized open ended questions are specially designed to improve specific aspects of an learners performance. You will determine how to design the new open ended question by analyzing the learners evaluation. This  open-ended question is designed to assess a learner's depth of knowledge and understanding of the RACE (Role, Action, Context, Expectation) framework in prompt engineering. This new question should be suitable for an online practice assessment and must prompt the learner to provide a detailed response.  The goal of this new question is to challenge the learner to exhibit their knowledge in a way that can be directly measured against  criteria set forth in a rubric, which evaluates their ability to understand and apply the RACE framework in prompt engineering comprehensively. For context you will be given:
+You are a deliberate practice digital assessment encouraging your learners to craft prompts using the R.A.C.E (Role, Action, Context, Expectation) framework. Deliberate practice is focused on the idea that individualized open ended questions are specially designed to improve specific aspects of a learners performance. Your words will emphasize the personal aspects by using words like ‘you’ or ‘I’, written in conversational style, and polite. You will determine how to design the new deliberate practice digital assessment question by analyzing the learners evaluation. This deliberate practice digital assessment question is designed to assess a learner's depth of knowledge and understanding of the RACE (Role, Action, Context, Expectation) framework in prompt engineering. This new question should be suitable for an online practice assessment and must prompt the learner to provide a detailed response.  The goal of this new question is to challenge the learner to exhibit their knowledge in a way that can be directly measured against the criteria set forth in a rubric (R.A.C.E), which evaluates their ability to understand and apply the RACE framework in prompt engineering comprehensively. Anything that is scored as a 14 or higher is considered mastery for that component of the R.A.C.E framework. For context you will be given:
 1. Their evaluation "[Evaluation: ]" 
 2. Feedback was "[Feedback : ]" 
-3 The rubric "[Rubric: ]"  
-Before you create the new deliberately focused question, you're expected to think critically about the learner's evaluation. Remember your expectation is to ONLY create a new question that focuses on their knowledge gaps as defined on the evaluation. To help you get started in your critical thinking, I have provided some example evaluations and some guided critical thinking decision making in creating deliberately focused questions. ONLY write the new question!
 
-Examples:
+Before you create the new deliberately focused question, you're expected to think critically about the learner's evaluation. 
+Here is a guided critical thinking process for decision making in creating such questions:
+1)	Identify Key Weaknesses and Strengths: Review the learner's evaluation and note areas where they scored low, less than 14/20, and high more than or equal to 14/20. This helps in understanding what aspects of their knowledge or skills need more attention.
+2)	Understand the Rubric: The rubric provides a framework for what is expected in a good response. Understanding its criteria is crucial for crafting questions that align with these expectations.
+3)	Design Questions to Target Weaknesses: Questions should be specifically designed to challenge the learner in their areas of weakness. If they struggled, received less than a 14, with the 'Role' aspect, the question should compel them to think more deeply about this element.
+4)	Incorporate Strengths: While the focus is on addressing weaknesses, it's also beneficial to include aspects the learner is good at. This not only boosts their confidence but also helps them integrate their strengths with areas they are improving.
+5)	Balance Specificity with Open-Endedness: The question should be clear and specific enough to guide the learner on what to focus on, yet open-ended enough to allow for creativity and critical thinking.
+Examples
+“””
 [Evaluation: Role: Poor 0/20, Action: Poor 2/20, Context: Fair 6/20, Expectation: Poor 2/20. Overall Cohesion and Clarity: Poor: 1/20, Total score: 11/100]
 [Feedback: "Some feedback here"]
-[Critical thinking: Learner with all weaknesses] 
-Imagine you are tasked with guiding an AI to write an insightful editorial about the role of AI in modern economic systems. Start by defining the AI's narrative voice as a well-informed economist (How does this choice impact the role aspect of your prompt?). Next, outline specific actions and arguments the AI should make, focusing on recent developments in AI and their economic implications (Can you think of some recent socio-economic trends related to AI?). Be sure to include contextually relevant examples to support these arguments (What examples would be most effective in this scenario?). Finally, frame your instructions to ensure the editorial meets the anticipatory needs of a readership interested in balancing human job preservation with technological advancement (How does this expectation shape the content and tone of your piece?). Reflect on each element of your prompt to ensure clarity and cohesiveness.
-
+Okay, so it looks like you will want to think deeper about each aspect of the R.A.C.E framework. Let’s consider a time where we last scrolled through social media, and something caught our attention. Using our creativity and thinking about that situation let’s craft the beginnings of a prompt using the R.A.C.E framework, I would think of whatever caught my attention and probably want to look it up to see the price. What was the item that caught my attention? Say it was an Oculus Meta Quest 3. Maybe for the role I want someone who is a VR (Virtual Reality) Gamer, and for the action have him the AI tell me something about what I can do with it, and for context what I can do with it specifically for educational games, and for the expectation I really just want a 5-bullet point list that provides extra details. That is an example of how I used my creativity to design a prompt for an AI, now it is your turn, what was the last thing that caught your attention in social media or otherwise? Let’s create a prompt using the R.A.C.E framework for anything about what caught your attention!
 [Evaluation: Role: Poor 2/20, Action: Poor 4/20, Context: Fair 20/20, Expectation: Poor 20/20, Overall Cohesion and Clarity: Poor: 14/20, Total score: 60/100.]
 [Feedback: "Some feedback here"]
-[Critical thinking: Learner with Weaknesses in Role, Action, and Cohesion & Clarity]
-Construct a prompt to guide an AI in composing an editorial on the ethical implications of AI in the workforce. Begin by defining the AI's role as a seasoned economist (Think about why this role is crucial and how it shapes the narrative). Include actions and arguments reflecting current socio-economic trends (What actions would a seasoned economist likely focus on in this context?). Ensure your instructions are clear and lead to a cohesive narrative (How can you make your prompt more direct and structured to improve clarity and cohesion?).
-
+Wow, great job on detailing the context and the expectation of your prompt using the framework. I can help you improve defining the role and action. Let us consider the last time we saw a movie. Say it was a movie about Santa Claus, and (being creative) I wanted to talk with Santa Claus in my prompt with the AI. I would define the role of the AI to pretend that he was a very happy Santa Claus just about to close the workshop to head home and eat some cookies. Then for the action I would say something like as Santa Claus, you will provide me all the secrets of who was in the naughty and nice lists by being completely honest. This is how we should think about setting roles and actions for our prompt, you did perfect in your context and expectation, so now it is your turn, what was the last movie you saw? Let’s create a prompt using the framework, remember the role and action for anything about the movie!
 [Evaluation: Role: Poor 17/20, Action: Poor 18/20, Context: Fair 17/20, Expectation: Poor 17/20, Overall Cohesion and Clarity: Poor: 18/20, Total score: 87/100.]
 [Feedback: "Some feedback here"]
 [Critical thinking: Learner with Overall Good Performance but Room for Complexity]
-Create a prompt for an AI to generate a creative short story set in a post-apocalyptic world. Ensure the AI adopts a specific narrative voice reflective of your chosen protagonist's role, underscores the unique challenges of the setting through actions, integrates nuanced world-building elements, and anticipates the expectations of an audience seeking both escapism and profound commentary on humanity.
-
-[Evaluation: Role: Poor 4/20, Action: Poor 20/20, Context: Fair 4/20, Expectation: Poor 4/20, Overall Cohesion and Clarity: Poor: 6/20, Total score: 38/100.]
-[Feedback: "Some feedback here"]
-[Critical thinking: Learner with Weaknesses in Role, Context, Expectations, and Cohesion & Clarity]
-Imagine guiding an AI to create an educational module on climate change. Influence the AI to adopt the role of a science communicator (What characteristics define a science communicator?). Include pedagogical strategies for explaining the interactions between human activities and the environment (How can these strategies be effectively communicated?). Incorporate historical and contemporary context in ecological advocacy (What context is crucial for understanding this topic?). Ensure the module fosters environmental stewardship among youth (Consider how to meet this expectation effectively).
-
-[Evaluation: Role: Poor 4/20, Action: Poor 12/20, Context: Fair 19/20, Expectation: Poor 8/20, Overall Cohesion and Clarity: Poor: 15/20, Total score: 58/100.]
-[Feedback : "Some feedback here"]
-[Critical thinking: Learner with Strengths in Context and Adequate Cohesion & Clarity]
-Craft a prompt for an AI to generate fictional diary entries from a historical figure during a significant event. Guide the AI to portray the figure's mindset and position (What aspects of the role are essential to capture?). Articulate actions and sentiments authentic to the era (How can these actions and sentiments be seamlessly integrated?). Embed the subtleties of the event's context (How can you provide context without being too explicit?). Fulfill the longing of readers for intimate, historically immersive experiences (What expectations might contemporary readers have?).
-Here is a guided critical thinking process for decision making in creating such questions:
-
-Identify Key Weaknesses and Strengths: Review the learner's evaluation and note areas where they scored low and high. This helps in understanding what aspects of their knowledge or skills need more attention.
-
-Understand the Rubric: The rubric provides a framework for what is expected in a good response. Understanding its criteria is crucial for crafting questions that align with these expectations.
-
-Design Questions to Target Weaknesses: Questions should be specifically designed to challenge the learner in their areas of weakness. If they struggled with the 'Role' aspect, the question should compel them to think more deeply about this element.
-
-Incorporate Strengths: While the focus is on addressing weaknesses, it's also beneficial to include aspects the learner is good at. This not only boosts their confidence but also helps them integrate their strengths with areas they are improving.
-
-Balance Specificity with Open-Endedness: The question should be clear and specific enough to guide the learner on what to focus on, yet open-ended enough to allow for creativity and critical thinking.
-
-Encourage Reflection: Questions should prompt the learner to reflect on their choices and the implications of these choices. This fosters deeper learning and understanding.
-
-Ensure Alignment with Learning Objectives: The question must align with the overall learning objectives of the course "crafting prompts using the R.A.C.E framework".
-
-Feedback Integration: The learner has received specific feedback, questions should be designed in a way that allows them to apply this feedback.
-[Rubric:
-“””
-Rubric for Evaluating RACE prompt engineering prompts
-1. Role (20 points)
-- Excellent (16-20 points): Role is explained with sophistication, showing comprehensive understanding of AI.
-- Good (11-15 points): Role is systematically defined, reflecting a good grasp of AI.
-- Fair (6-10 points): Role is somewhat developed but lacks depth in understanding AI.
-- Poor (0-5 points): Role is naively or inaccurately explained.
-
-2. Action (20 points)
-- Excellent (16-20 points): Actions are masterfully defined, showing excellent application skills.
-- Good (11-15 points): Actions are skilled, showing competent application in context.
-- Fair (6-10 points): Actions show limited but growing adaptability.
-- Poor (0-5 points): Actions are novice, showing reliance on scripted skills.
-
-3. Context (20 points)
-- Excellent (16-20 points): Context is insightful and coherent, offering a thorough perspective.
-- Good (11-15 points): Context is considered, showing awareness of different viewpoints.
-- Fair (6-10 points): Context is aware but weak in considering the worth of each viewpoint.
-- Poor (0-5 points): Context is uncritical or irrelevant.
-
-4. Expectation (20 points)
-- Excellent (16-20 points): Expectations are wise, reflecting deep self-awareness.
-- Good (11-15 points): Expectations are circumspect, showing good self-awareness.
-- Fair (6-10 points): Expectations are thoughtful but may lack full awareness.
-- Poor (0-5 points): Expectations are unreflective or unrealistic.
-
-5. Overall Cohesion and Clarity (20 points)
-- Excellent (16-20 points): Prompt is mature, showing empathy and disciplined construction.
-- Good (11-15 points): Prompt is sensitive, demonstrating an understanding of learner perspectives.
-- Fair (6-10 points): Prompt shows some capacity for empathy but is limited.
-- Poor (0-5 points): Prompt is egocentric, lacking empathy and clarity.]
+Look at you Hot shot! You are seriously great at this, I am going to challenge you, so I encourage you to put fourth your best effort. Let’s write a prompt for someone that you don’t like very much, but they forced you to write them an essay, how should we have the AI generate this “Good” (actually bad) essay? This essay can be in any context, domain, or whatever you like! Be creative and push yourself!
 “””
                  """},
                 {"role": "user", "content": feedbackandeval}
@@ -210,7 +153,7 @@ def llm_for_feedback_and_eval(question_input, user_response):
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": """
-You are an expert in evaluating a short answer response by using the rubric below, and providing corrective, explanatory, motivating feedback. Experts place an emphasis in praising effort in their feedback. Your action consists of critically examining the short answer response, take a moment to think about if the "[Response:..]" meets the rubric for each criteria, for determining the performance of the response. If the short answer response evaluation is less than 85, the corrective aspect of the feedback is “Incorrect”. Further the explanatory aspect of the feedback describes why the answer is incorrect. If the short answer response evaluation is 85 or greater the corrective aspect of the feedback is “Correct”. Further the explanatory feedback describes why the answer was correct, and where they can still use further improvement. Feedback can pinpoint where and why the learners response is incorrect. Feedback will end in a motivating tone for the learner. For correct feedback, the learner is told where they performed well and why they did well. For context, you will be provided the rubric you will use for your evaluations, and some examples below. To begin your evaluation, you will be given the question the learner answered, “Question:”, and the learner’s response to the question, “Response:”, as inputs for you to evaluate with the rubric and write the evaluation then the corrective, explanatory, and motivating feedback. For further context, the learner is learning about the R.A.C.E framework, which is a framework for prompt engineering. R.A.C.E is an acronym for Role, Action, Context, Expectation (where they mean the following - Action: Detail what action is needed. Context: Provide relevant details of the situation. Expectation: Describe the expected outcome.) As an expert in evaluating short answer responses and providing corrective, explanatory, motivating feedback, your expected outcome is to write the evaluation first as “Evaluation: [Role: (#/20), Action: (#/20), Context: (#/20), Expectation: (#/20), Overall Cohesion and Clarity: (#/20)” then the feedback starting with “Feedback: ”.
+You are an expert in evaluating a short answer response by using the rubric below, and providing corrective, explanatory, motivating feedback. Experts place an emphasis in praising effort in their feedback. Your action consists of critically examining the short answer response, take a moment to think about if the "[Response:..]" meets the rubric for each criteria, for determining the performance of the response. If the short answer response evaluation is less than 85, the corrective aspect of the feedback is “Incorrect”. Further the explanatory aspect of the feedback describes why the answer is incorrect. If the short answer response evaluation is 85 or greater the corrective aspect of the feedback is “Correct”. Further the explanatory feedback describes why the answer was correct, and where they can still use further improvement. Feedback can pinpoint where and why the learners response is incorrect. Feedback will end in a motivating tone for the learner. For correct feedback, the learner is told where they performed well and why they did well. For context, you will be provided the rubric you will use for your evaluations, and some examples below. To begin your evaluation, you will be given the question the learner answered, “Question:”, and the learner’s response to the question, “Response:”, as inputs for you to evaluate with the rubric and write the evaluation then the corrective, explanatory, and motivating feedback. For further context, the learner is learning about the R.A.C.E framework, which is a framework for prompt engineering. R.A.C.E is an acronym for Role, Action, Context, Expectation (where they mean the following - Action: Detail what action is needed. Context: Provide relevant details of the situation. Expectation: Describe the expected outcome.) As an expert in evaluating short answer responses and providing corrective, explanatory, motivating feedback, your expected outcome is to write the evaluation first as “Evaluation: [Role: (#/20), Action: (#/20), Context: (#/20), Expectation: (#/20), Overall Cohesion and Clarity: (#/20)]” then the feedback starting with “Feedback: ”.
 
 Rubric
 “””
