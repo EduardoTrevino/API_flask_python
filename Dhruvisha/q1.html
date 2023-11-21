@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 1</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/7254a5900b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <label for="questionInput" class="question-label">Question 1</label>
+        <div id="questionInput" class="centered-content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Nec dui nunc mattis enim ut.
+        </div>
+        <div class="input-box-wrapper">
+            <textarea id="responseBox" class="input-box" rows="1" placeholder="Write what you think here "></textarea>
+            <!-- Placeholder added -->
+            <button id="submitButton" class="submitButton" onclick="sendUserResponse()">
+                <i class="fas fa-arrow-up"></i> <!-- Font Awesome icon -->
+            </button>
+        </div>
+        <div id="streamedResponse" class="centered-content"></div> <!-- New label/div for streamed response -->
+    </div>
+
+    <script>
+        const textArea = document.getElementById("responseBox");
+
+        textArea.addEventListener("input", function () {
+            this.style.height = "auto";
+            this.style.height = this.scrollHeight + "px";
+        });
+
+        async function sendUserResponse() {
+            const questionInput = document.getElementById('questionInput');
+            const responseBox = document.getElementById('responseBox');
+            const submitButton = document.getElementById('submitButton');
+            const streamedResponse = document.getElementById('streamedResponse');
+
+            const questionText = questionInput.textContent;
+            const responseText = responseBox.value; // Get text from responseBox
+
+            // Make the button disappear
+            submitButton.style.display = 'none';
+
+            // make the text box questionInput uneditable
+            responseBox.disabled = true;
+
+            try {
+                // Send the user's text and the previous response to the backend
+                const response = await fetch('/store-front-end-data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ questionInput: questionText, userResponse: responseText })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+
+                // Assuming the backend sends back JSON
+                const responseData = await response.json();
+                console.log(responseData.message); // Or handle this message as needed
+
+                // If everything went okay, start streaming
+                streamRealTimeFeedback();
+            } catch (error) {
+                console.error('Fetch error:', error);
+                streamedResponse.innerHTML = 'error in getting response';; // Show the button again or handle error differently
+                appendArrowButton();
+            }
+        }
+
+        // Function to stream the real-time feedback from the backend given the response
+        async function streamRealTimeFeedback() {
+            const streamedResponseBox = document.getElementById('streamedResponse');
+            let feedbackProcessed = false; // Flag to indicate if feedback section has been processed
+
+            try {
+                const response = await fetch('/send-llm-feedback-and-eval', {
+                    method: 'GET'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const reader = response.body.getReader();
+                let streamedMessage = "";
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) {
+                        break;
+                    }
+                    streamedMessage += new TextDecoder().decode(value);
+                    if (streamedMessage.endsWith("END")) {
+                        streamedMessage = streamedMessage.substring(0, streamedMessage.length - 3);  // Remove the "END" from the message
+                        appendArrowButton();
+                        break;  // Break out of the loop as we have reached the end of the stream
+                    }
+
+                    // Processing the streamed message
+                    streamedMessage = streamedMessage.replace(/\[|\]/g, ''); // Remove brackets
+                    streamedMessage = streamedMessage.replace(/\] \[/g, '<br>'); // New line after evaluations
+
+                    if (!feedbackProcessed && /Feedback:/.test(streamedMessage)) {
+                        streamedMessage = streamedMessage.replace(/Feedback:/, '<br><br>Feedback:');
+                        feedbackProcessed = true; // Update flag after processing "Feedback:"
+                    }
+
+                    // Color the word 'Correct' in green and 'Incorrect' in red
+                    streamedMessage = streamedMessage.replace(/Correct/g, '<span style="color: green;">Correct</span>');
+                    streamedMessage = streamedMessage.replace(/Incorrect/g, '<span style="color: red;">Incorrect</span>');
+                    streamedResponseBox.innerHTML = `<div> ${streamedMessage}</div>`;
+                }
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+                streamedResponseBox.innerHTML += `<div style="color: red;">Error: ${error}</div>`;
+            }
+        }
+        // Add the arrow for the next page after feedback has been streamed
+        function appendArrowButton() {
+            const arrowButton = document.createElement("button");
+            arrowButton.innerHTML = "→";
+            arrowButton.id = "arrowButton";
+            arrowButton.style.position = "absolute";
+            arrowButton.style.right = "10px";
+            arrowButton.style.bottom = "10px";
+            document.getElementById("streamedResponse").appendChild(arrowButton);
+
+            arrowButton.addEventListener("click", function () {
+                sendFeedbackAndRedirect();
+            });
+        }
+
+        // Function to send the feedback to the backend and redirect to the next page
+        async function sendFeedbackAndRedirect() {
+            const feedbackandeval = document.getElementById('streamedResponse').textContent;
+
+            try {
+                // Send the feedback to the backend
+                const response = await fetch('/store-feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ feedbackandeval: feedbackandeval })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+
+                // Redirect to the new HTML page
+                window.location.href = '/question_page_3'; // Next question page
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+
+        // Call the function to start streaming the LLM response
+        streamLLMResponse();
+        // Additional script for auto-resizing the textarea
+        document.addEventListener('DOMContentLoaded', function () {
+            const textarea = document.getElementById('responseBox');
+            textarea.addEventListener('input', autoResize, false);
+
+            function autoResize() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            }
+        });
+    </script>
+</body>
+
+</html>
