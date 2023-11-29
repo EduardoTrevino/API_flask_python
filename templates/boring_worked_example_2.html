@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worked Example 2</title>
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            background-color: #1C1C1E;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .content {
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            /*Lets move this to the button to the right/*/
+            float: right;
+        
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>Worked Example:</h2>
+        <p>Develop a prompt that guides an AI in crafting a comprehensive guide on healthy eating habits for a diverse audience. The prompt should instruct the AI to assume the role of a seasoned nutritionist, incorporating actions and discussions that reflect the latest nutritional science and dietary guidelines. The AI should include context from various cultural and dietary preferences and address common misconceptions about nutrition. Additionally, the prompt should lead the AI to create content that meets the expectations of an audience seeking practical, evidence-based advice on improving their dietary habits.</p>
+        <p><strong>Solution Prompt:</strong><br>
+        As a highly experienced nutritionist, create a detailed guide on healthy eating habits suitable for a diverse audience. Your guide should incorporate the latest findings in nutritional science and align with current dietary guidelines. Discuss various aspects of healthy eating, including balanced diets, portion control, and the importance of variety in food choices. Address common nutrition myths and provide evidence-based clarifications. Consider cultural diversity and different dietary preferences, offering adaptable advice that resonates with a broad spectrum of individuals. Your primary objective is to offer practical, understandable, and scientifically sound advice, empowering readers to make informed decisions about their eating habits and foster long-term healthy dietary practices.</p>
+        Let's break this solution prompt using <strong>R.A.C.E</strong>, It will guide you in crafting your prompt.</p>
+        <strong>Role:</strong> Specify the role of the large language model.  "As a highly experienced nutritionist," - This establishes the AI's role as a knowledgeable and experienced professional in the field of nutrition, setting the tone for authoritative and informed guidance on healthy eating.<br><br>
+        <strong>Action:</strong> Detail what action is needed. "create a detailed guide on healthy eating habits suitable for a diverse audience. Discuss various aspects of healthy eating, including balanced diets, portion control, and the importance of variety in food choices. Address common nutrition myths and provide evidence-based clarifications." - These instructions define the actions the AI should undertake. It needs to develop a comprehensive guide that covers multiple facets of healthy eating and debunk common misconceptions, all while relying on evidence-based information.<br><br>
+        <strong>Context:</strong> Provide relevant details of the situation. "Consider cultural diversity and different dietary preferences," - This part instructs the AI to include context by acknowledging the diversity of its audience. The guide should be adaptable and relevant to people with different cultural backgrounds and dietary needs, making the advice more inclusive and applicable to a wider audience.<br><br>
+        <strong>Expectation:</strong> Describe the expected outcome. "Your primary objective is to offer practical, understandable, and scientifically sound advice, empowering readers to make informed decisions about their eating habits and foster long-term healthy dietary practices." - This section outlines the expectation for the AI's output. The guide should not only be informative but also practical and easy to understand. The goal is to empower the audience to make better dietary choices and adopt healthier eating habits over the long term.</p>
+
+        <!-- <button class="next-button" onclick="sendData(); window.location.href='question_page'">→</button> -->
+        <button class="next-button" onclick="sendData()">→</button>
+    </div>
+</body>
+<script>
+    function sendData() {
+        // Simply redirect to boring_question_page_2
+        window.location.href = 'boring_question_page_2';
+    }
+    </script>
+</html>

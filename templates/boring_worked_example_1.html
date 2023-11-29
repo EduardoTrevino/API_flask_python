@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worked Example 1</title>
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            background-color: #1C1C1E;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .content {
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            /*Lets move this to the button to the right/*/
+            float: right;
+        
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>Worked Example:</h2>
+        <p>You are tasked with prompting an AI to create an educational module for high school students about climate change. You will need to formulate a prompt that influences the AI to take on the role of a science communicator. The AI will need to execute pedagogical strategies to elucidate the complex interactions between human activities and the environment. To do this you will need to integrate the historical and contemporary context of ecological advocacy. Make sure your prompt to the AI meets the expectation of fostering environmental stewardship among the youth.</p>
+        <p><strong>Solution Prompt:</strong><br>
+        As an expert science communicator, design an engaging and informative educational module on climate change for high school students. Your content should elucidate the intricate connections between human activities and environmental impact. Employ effective pedagogical strategies, such as interactive visual aids, real-world examples, and simplified scientific explanations to ensure comprehensibility. Delve into the historical context of ecological advocacy and its evolution, highlighting key milestones and figures. Integrate contemporary issues and solutions, emphasizing the role of individual and collective action. Your goal is to inspire and foster environmental stewardship among young minds, equipping them with knowledge and motivation to contribute to a sustainable future.</p>
+        Let's break this solution prompt using <strong>R.A.C.E</strong>, It will guide you in crafting your prompt.</p>
+        <strong>Role:</strong> Specify the role of the large language model. "As an expert science communicator," - This sets the AI's role as a knowledgeable and skilled communicator in the field of science, particularly around the topic of climate change.<br><br>
+        <strong>Action:</strong> Detail what action is needed. "design an engaging and informative educational module on climate change for high school students. Your content should elucidate the intricate connections between human activities and environmental impact. Employ effective pedagogical strategies, such as interactive visual aids, real-world examples, and simplified scientific explanations to ensure comprehensibility." - These sentences outline the actions the AI should undertake. It should create educational content that is both engaging and informative, using specific teaching methods and tools to clarify complex interactions.<br><br>
+        <strong>Context:</strong> Provide relevant details of the situation. "Delve into the historical context of ecological advocacy and its evolution, highlighting key milestones and figures. Integrate contemporary issues and solutions," - This part provides the historical and current context in which the AI should place its content. It involves discussing the history of ecological advocacy and relating it to present-day challenges and solutions in climate change.<br><br>
+        <strong>Expectation:</strong> Describe the expected outcome.  "emphasizing the role of individual and collective action. Your goal is to inspire and foster environmental stewardship among young minds, equipping them with knowledge and motivation to contribute to a sustainable future." - This defines the expectation of the AI's output. It should aim to inspire high school students to become environmental stewards and motivate them to take action for a sustainable future.</p>
+
+        <!-- <button class="next-button" onclick="sendData(); window.location.href='question_page'">→</button> -->
+        <button class="next-button" onclick="sendData()">→</button>
+    </div>
+</body>
+<script>
+    function sendData() {
+        window.location.href = 'boring_question_page_1';
+    }
+    </script>
+    
+</html>

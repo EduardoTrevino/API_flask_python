@@ -39,6 +39,22 @@ def worked_example_2():
 def question_page_2():
     return render_template('question_page_2.html')
 
+@app.route('/boring_worked_example_1')
+def boring_worked_example_1():
+    return render_template('boring_worked_example_1.html')
+
+@app.route('/boring_question_page_1')
+def boring_question_page_1():
+    return render_template('boring_question_page_1.html')
+
+@app.route('/boring_worked_example_2')
+def boring_worked_example_2():
+    return render_template('boring_worked_example_2.html')
+
+@app.route('/boring_question_page_2')
+def boring_question_page_2():
+    return render_template('boring_question_page_2.html')
+
 @app.route('/post_test')
 def post_test():
     return render_template('post_test.html')
