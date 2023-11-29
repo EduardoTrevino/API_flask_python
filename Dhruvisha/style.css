@@ -1,0 +1,124 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #1C1C1E;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.content {
+    max-width: 600px;
+    padding: 20px;
+}
+
+.next-button {
+    margin-top: 20px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    /*Lets move this to the button to the right/*/
+    float: right;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+    /* Adjust as needed for spacing from the top */
+}
+
+.centered-content {
+    margin: 0 auto;
+    width: 70%;
+    /* Adjust to your preference */
+    background-color: #1C1C1E;
+    color: white;
+    font-size: 24px;
+    /* Increased font size */
+    font-family: Helvetica, Arial, sans-serif;
+    /* Changed font to Helvetica */
+    text-align: left;
+    /* Text aligned to left */
+    padding: 10px;
+}
+
+.input-box-wrapper {
+    position: relative;
+    width: 70%;
+    /* Adjust width as needed */
+    margin: 0 auto;
+}
+
+.input-box {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 24px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid transparent;
+    /* Makes bottom border transparent */
+    color: white;
+    caret-color: white;
+    resize: none;
+    /* Prevents resizing */
+}
+
+.input-box::placeholder {
+    color: #565869;
+    /* Style the placeholder text */
+}
+
+.input-box:focus {
+    outline: none;
+    /* Remove the default focus outline */
+    border-bottom: 1px solid transparent;
+    /* Keeps bottom border transparent on focus */
+}
+
+.input-box:hover {
+    cursor: pointer;
+}
+
+.question-label {
+    font-size: 24px;
+}
+
+/* Styles for the circular button */
+.submitButton {
+    position: absolute;
+    right: -28px;
+    /* Adjust as needed */
+    bottom: 8px;
+    /* Adjust as needed, align with input box */
+    /* background-color: #218aff; */
+    background-color: white;
+    color: #1C1C1E;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    /* Adjust size as needed */
+    height: 30px;
+    /* Adjust size as needed */
+    font-size: 16px;
+    /* Adjust size as needed */
+    text-align: center;
+    line-height: 30px;
+    /* Vertically center the arrow */
+    cursor: pointer;
+    z-index: 2;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+}
