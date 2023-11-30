@@ -23,6 +23,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+@app.route('/hub')
+def hub():
+    return render_template('hub.html')
+
 @app.route('/worked_example_1')
 def worked_example_1():
     return render_template('worked_example_1.html')
