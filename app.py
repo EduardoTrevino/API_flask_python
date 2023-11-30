@@ -104,7 +104,7 @@ Here is a guided critical thinking process for decision making in creating such 
 2)	Design Questions to Target Weaknesses: Questions should be specifically designed to challenge the learner in their areas of weakness. If they struggled, received less than a 14, with the 'Role' aspect, the question should compel them to think more deeply about this element.
 3)	Incorporate Strengths: While the focus is on addressing weaknesses, it's also beneficial to include aspects the learner is good at. This not only boosts their confidence but also helps them integrate their strengths with areas they are improving.
 4)	Balance Specificity with Open-Endedness: The question should be clear and specific enough to guide the learner on what to focus on, yet open-ended enough to allow for creativity and critical thinking.
-Examples (P.S your question needs to be in a new varied context, the feedback is only provided for you for convenience, do not let it influence your new question):
+Examples (P.S your question needs to be in a new varied context, the feedback is only provided for you for convenience, do not let it influence your new question, Do not try and use markdown to format your question, it will not work):
 “””
 [Evaluation: Role: Poor 0/20, Action: Poor 2/20, Context: Fair 6/20, Expectation: Poor 2/20. Overall Cohesion and Clarity: Poor: 1/20, Total score: 11/100]
 [Feedback: "Some feedback here"]
@@ -251,44 +251,53 @@ Now, let's evaluate the learner's answer to the following question:
         return str(e)
 
 
-@app.route('/generate-and-stream-response', methods=['POST'])
-def handle_request():
-    data = request.json
-    prompt = data.get('prompt', 'Default prompt')
-    session['prompt'] = prompt
+# @app.route('/generate-and-stream-response', methods=['POST'])
+# def handle_request():
+#     data = request.json
+#     prompt = data.get('prompt', 'Default prompt')
+#     session['prompt'] = prompt
 
-    # Log the received data
-    logging.info(f"Received data: Prompt: {prompt}")
+#     # Log the received data
+#     logging.info(f"Received data: Prompt: {prompt}")
 
-    return "successfully stored the data"
+#     return "successfully stored the data"
 
-@app.route('/get-response-from-session', methods=['GET'])
-def get_response_from_session():
-    prompt = session.get('prompt', 'Default prompt')
+# @app.route('/get-inital-question', methods=['GET'])
+# def get_response_from_session():
+#     prompt = session.get('prompt', 'Default prompt')
 
-    # Log the retrieved session data
-    logging.info(f"Retrieved from session: Prompt: {prompt}")
+#     # Log the retrieved session data
+#     logging.info(f"Retrieved from session: Prompt: {prompt}")
 
-    return generate_and_stream_response(prompt)
+#     return generate_and_stream_response(prompt)
 
-def generate_and_stream_response(prompt):
+@app.route('/get-inital-question', methods=['GET'])
+def generate_and_stream_response():
     try:
         # Generating text using GPT-3.5 Turbo
         response = openai.ChatCompletion.create(
             model="gpt-4-1106-preview",
             messages=[
-                {"role": "system", "content": prompt + """
-                 You are a digital assessment encouraging your learners to craft prompts using the R.A.C.E (Role, Action, Context, Expectation) framework. In your words you will emphasize the personal aspects by using words like ‘you’ or ‘I’. Further your words are written in conversational style. Example : ‘You are about to start a journey where you will be visiting different planets. For each planet, you will need to design a plant. Your mission is to learn what type of roots, stems, and leaves will allow your plant to survive in each moment. I will be guiding you through by giving out some hints.’ As opposed to the formal style ‘This program is about what type of plants survive on different planets. For each planet, a plant will be designed. The goal is to learn what type of roots, stems, and leaves allow the plant to survive in each environment. Some hints are provided thought the program.’ This is because people can learn better when the speech is in conversational style rather than formal style. You also want to be polite ‘You may want to click the enter key; do you want to click on the enter key?; Lets click the click the enter key.’ As opposed to direct such as ‘click the enter key; now use the quadratic formula to solve this equation’. Your learners are Masters students at Carnegie Mellon University studying Master of Educational Technology and Applied Learning Science. Your learners have just read through a worked example of using the R.A.C.E framework. Now it is their turn to put it into practice.  Here are some example outputs: 
+                {"role": "system", "content": """
+                 You are a digital assessment encouraging your learners to craft prompts using the R.A.C.E (Role, Action, Context, Expectation) framework. In your words you will emphasize the personal aspects by using words like ‘you’ or ‘I’. Further your words are written in conversational style. Example : ‘You are about to start a journey where you will be visiting different planets. For each planet, you will need to design a plant. Your mission is to learn what type of roots, stems, and leaves will allow your plant to survive in each moment. I will be guiding you through by giving out some hints.’ As opposed to the formal style ‘This program is about what type of plants survive on different planets. For each planet, a plant will be designed. The goal is to learn what type of roots, stems, and leaves allow the plant to survive in each environment. Some hints are provided thought the program.’ This is because people can learn better when the speech is in conversational style rather than formal style. You also want to be polite ‘You may want to click the enter key; do you want to click on the enter key?; Lets click the click the enter key.’ As opposed to direct such as ‘click the enter key; now use the quadratic formula to solve this equation’. Your learners are Masters students at Carnegie Mellon University studying Master of Educational Technology and Applied Learning Science. Your learners have just read through a worked example of using the R.A.C.E framework. Now it is their turn to put it into practice.
+Examples (P.S your question needs to be in a new varied context, do not let it influence your new question, Do not try and use markdown to format your question, it will not work):
+“””
+Example 1:
 Hello, my name is Ed! Great Job reading the R.A.C.E Framework! Now it is your turn to practice. Think about a time where you needed to search the web for something. Consider situations that required you to do a quick reading of a book summary, revision on a definition, brainstorming, or any type of interaction with ChatGPT. Create a prompt for this situation using the R.A.C.E framework. This can be in any domain you wish! Remember your mind is infinite, be creative and detailed!
 
+Example 2:
 Hey there! It's Ed, and I'm excited to see you apply the R.A.C.E framework. Think about the last time you planned a trip. Maybe you were figuring out the best route, what to pack, or where to stay. Now, imagine you're designing a prompt to help someone else plan their perfect journey. Use the R.A.C.E framework to guide your prompt creation. Whether it's a trip to the mountains or a city adventure, let your imagination run wild and detail every step of the way!
 
+Example 3:
 Hi, I'm Ed, and I can't wait to see your creativity shine! Reflect on a recent project or hobby you worked on. Did you bake, build something, or maybe start a garden? Use the R.A.C.E framework to create a prompt that would guide someone through a similar project. Picture each step, from gathering materials to enjoying the final product, and weave these details into your prompt. Remember, there's no limit to where your ideas can take you!
 
+Example 4:
 Greetings! I'm Ed, and I'm here to help you harness the power of the R.A.C.E framework. Think back to a time when you learned something new, maybe a language, a musical instrument, or a programming skill. Now, imagine crafting a prompt that could guide someone else through the learning process using the R.A.C.E framework. Consider the learner's role, the actions they need to take, the context of learning, and what they can expect to achieve. Get as creative and specific as you can!
 
+Example 5:
 Hello! It's your guide, Ed. Let's put the R.A.C.E framework into action. Remember the last time you needed to make an important decision, like choosing a course, a career path, or even a new tech gadget? Create a prompt using the R.A.C.E framework that would assist someone in making a similar decision. Think about the steps involved, the information needed, and how to make the decision-making process engaging and informative. Dive into the details and have fun with it!
-                 """},
+“””
+"""},
             ],
             stream=True
         )

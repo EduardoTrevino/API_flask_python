@@ -54,33 +54,8 @@
 </body>
 <script>
     function sendData() {
-        const prompt = ` `;
-
-        console.log("Sending data to server:", { prompt });
-    
-        // Send the data to the server
-        fetch('/generate-and-stream-response', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ prompt})
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log("Data sent successfully");
-            return response.text();
-        })
-        .then(data => {
-            console.log('Success:', data);
-            // Redirect to question_page.html
-            window.location.href = 'question_page';
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        // Simply redirect to question_page
+        window.location.href = 'question_page';
     }
     </script>
     
