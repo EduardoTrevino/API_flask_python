@@ -237,6 +237,9 @@ body {
                 newContent = newContent.replace(/Feedback:/, '<br><br>Feedback:');
             }
 
+            // Remove brackets
+            newContent = newContent.replace(/\[|\]/g, '');
+
             // Add the processed new content back to the streamedMessage
             streamedMessage = previousMessage + newContent;
             previousMessage = streamedMessage;  // Update the previous message
