@@ -173,6 +173,9 @@ body {
 
         // make the text box questionInput uneditable
         responseBox.disabled = true;
+
+        console.log("Sending data to server:", { questionText, responseText });
+
         
         try {
             // Send the user's text and the previous response to the backend

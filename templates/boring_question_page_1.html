@@ -111,7 +111,7 @@ body {
 <body>
     <div class="container">
         <label for="questionInput" class="question-label">Question 1</label>
-        <div id="questionInput" class="centered-content"></div>
+        <!-- <div id="questionInput" class="centered-content"></div> -->
         <div id="questionInput" class="centered-content">
             <p>Hey there! It's Ed, and I'm excited to see you apply the framework. Think about the last time you planned a trip. Maybe you were figuring out the best route, what to pack, or where to stay. Now, imagine you're designing a prompt to help someone else plan their perfect journey. Use the framework to guide your prompt creation. Whether it's a trip to the mountains or a city adventure, let your imagination run wild and detail every step of the way!</p>
         </div>
@@ -173,6 +173,9 @@ body {
 
         // make the text box questionInput uneditable
         responseBox.disabled = true;
+
+        // Lets log the data to the console
+        console.log("Sending data to server:", { questionText, responseText });
         
         try {
             // Send the user's text and the previous response to the backend
