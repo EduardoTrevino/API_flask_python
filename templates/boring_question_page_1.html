@@ -205,51 +205,65 @@ body {
 
     // Function to stream the real-time feedback from the backend given the response
     async function streamRealTimeFeedback() {
-        const streamedResponseBox = document.getElementById('streamedResponse');
-        let feedbackProcessed = false; // Flag to indicate if feedback section has been processed
+    const streamedResponseBox = document.getElementById('streamedResponse');
+    const textDecoder = new TextDecoder();
+    let endSignalReceived = false;
+    let previousMessage = "";  // Variable to hold the previous state of the message
 
-        try {
-            const response = await fetch('/send-llm-feedback-and-eval', {
-                method: 'GET'
-            });
+    try {
+        const response = await fetch('/send-llm-feedback-and-eval', { method: 'GET' });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const reader = response.body.getReader();
+        let streamedMessage = "";
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) {
+                break;
             }
-            const reader = response.body.getReader();
-            let streamedMessage = "";
+            streamedMessage += textDecoder.decode(value, { stream: true });
 
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) {
-                    break;
-                }
-                streamedMessage += new TextDecoder().decode(value);
-                if (streamedMessage.endsWith("END")) {
-                    streamedMessage = streamedMessage.substring(0, streamedMessage.length - 3);  // Remove the "END" from the message
-                    appendArrowButton();
-                    break;  // Break out of the loop as we have reached the end of the stream
-                }
+            // Process new content only
+            let newContent = streamedMessage.substring(previousMessage.length);
 
-                // Processing the streamed message
-                streamedMessage = streamedMessage.replace(/\[|\]/g, ''); // Remove brackets
-                streamedMessage = streamedMessage.replace(/\] \[/g, '<br>'); // New line after evaluations
+            if (/Feedback:/.test(newContent) && !previousMessage.includes("Feedback:")) {
+                newContent = newContent.replace(/Feedback:/, '<br><br><br>Feedback:');
+            }
 
-                if (!feedbackProcessed && /Feedback:/.test(streamedMessage)) {
-                    streamedMessage = streamedMessage.replace(/Feedback:/, '<br><br>Feedback:');
-                    feedbackProcessed = true; // Update flag after processing "Feedback:"
-                }
+            // Remove brackets
+            newContent = newContent.replace(/\[|\]/g, '');
 
-                // Color the word 'Correct' in green and 'Incorrect' in red
-                streamedMessage = streamedMessage.replace(/Correct/g, '<span style="color: green;">Correct</span>');
-                streamedMessage = streamedMessage.replace(/Incorrect/g, '<span style="color: red;">Incorrect</span>');
+            // Color "Correct" in green and "Incorrect" in red
+            newContent = newContent.replace(/Correct/g, '<span style="color: green;">Correct</span>');
+            newContent = newContent.replace(/Incorrect/g, '<span style="color: red;">Incorrect</span>');
+
+            // Add the processed new content back to the streamedMessage
+            streamedMessage = previousMessage + newContent;
+            previousMessage = streamedMessage;  // Update the previous message
+
+            // Update the HTML content
+            if (!endSignalReceived) {
                 streamedResponseBox.innerHTML = `<div> ${streamedMessage}</div>`;
             }
-        } catch (error) {
-            console.error('There has been a problem with your fetch operation:', error);
-            streamedResponseBox.innerHTML += `<div style="color: red;">Error: ${error}</div>`;
+
+            // Check for the end signal
+            if (streamedMessage.includes("END")) {
+                endSignalReceived = true;
+                streamedMessage = streamedMessage.replace("END", "");
+                streamedResponseBox.innerHTML = `<div> ${streamedMessage}</div>`;
+                break;
+            }
         }
+
+        appendArrowButton(); // Append the arrow button after processing the final message
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+        streamedResponseBox.innerHTML += `<div style="color: red;">Error: ${error}</div>`;
     }
+}
     // Add the arrow for the next page after feedback has been streamed
     function appendArrowButton() {
         const arrowButton = document.createElement("button");
