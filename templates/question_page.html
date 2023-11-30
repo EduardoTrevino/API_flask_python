@@ -234,7 +234,7 @@ body {
             let newContent = streamedMessage.substring(previousMessage.length);
 
             if (/Feedback:/.test(newContent) && !previousMessage.includes("Feedback:")) {
-                newContent = newContent.replace(/Feedback:/, '<br><br>Feedback:');
+                newContent = newContent.replace(/Feedback:/, '<br><br><br>Feedback:');
             }
 
             // Remove brackets
