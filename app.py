@@ -27,7 +27,9 @@ db = SQLAlchemy(app)
 def hub():
     return render_template('hub.html')
 
-@app.route('/worked_example_1')
+# Version B Treatment
+
+@app.route('/PE_Carnegie_version')
 def worked_example_1():
     return render_template('worked_example_1.html')
 
@@ -43,7 +45,9 @@ def worked_example_2():
 def question_page_2():
     return render_template('question_page_2.html')
 
-@app.route('/boring_worked_example_1')
+# Version A Control
+
+@app.route('/PE_Andrew_version')
 def boring_worked_example_1():
     return render_template('boring_worked_example_1.html')
 
@@ -59,11 +63,13 @@ def boring_worked_example_2():
 def boring_question_page_2():
     return render_template('boring_question_page_2.html')
 
+# Outro End of Adaptive Deliberate practice questions and feedback
+
 @app.route('/post_test')
 def post_test():
     return render_template('post_test.html')
 
-
+# Old OLI implementation
 @app.route('/')
 def home():
     return render_template('index.html')
