@@ -27,6 +27,10 @@ db = SQLAlchemy(app)
 def hub():
     return render_template('hub.html')
 
+@app.route('/grade')
+def grade():
+    return render_template('grade.html')
+
 # Version B Treatment
 
 @app.route('/PE_Carnegie_version')
